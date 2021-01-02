@@ -22,18 +22,23 @@ func _Peer_Disonnected(gateway_id):
 	print("Gateway " + str(gateway_id) + " Disconnected")
 	
 remote func AuthenticatePlayer(username, password, player_id):
-	print("Authentication request received")
+	var token
 	var gateway_id = get_tree().get_rpc_sender_id()
 	var result
-	print("Starting authentication...")
 	if not PlayerData.PlayerIDs.has(username):
-		print("User not recognized")
 		result = false
 	elif not PlayerData.PlayerIDs[username].Password == password:
-		print("Incorrect password")
 		result = false
 	else:
-		print("Successful authentication")
 		result = true
-	print("Sending authentication result to gateway")
-	rpc_id(gateway_id, "AuthenticationResults", result, player_id)
+		
+		randomize()
+		var hashed = str(randi()).sha256_text()
+		var timestamp = str(OS.get_unix_time())
+		token = hashed + timestamp
+		
+		#TODO: Replace hardcoded GameServer1 reference with loadbalance solution
+		var gameserver = "GameServer1" 
+		GameServers.DistributeLoginToken(token, gameserver)
+
+	rpc_id(gateway_id, "AuthenticationResults", result, player_id, token)

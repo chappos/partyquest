@@ -19,6 +19,10 @@ config/name="GameServer"
 run/main_scene="res://Scenes/Main/GameServer.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+HubConnection="*res://Scenes/Main/HubConnection.gd"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

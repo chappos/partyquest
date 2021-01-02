@@ -47,11 +47,11 @@ func RequestLogin():
 	username = ""
 	password = ""
 	
-remote func ReturnLoginRequest(results):
+remote func ReturnLoginRequest(results, token):
 	print("results received")
 	if results == true:
+		GameServer.token = token
 		GameServer.ConnectToServer()
-		#deal with login screen
 	else:
 		print("Incorrect username or password")
 		emit_signal("login_failed")
