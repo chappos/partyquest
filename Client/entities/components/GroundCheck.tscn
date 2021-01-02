@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://entities/components/GroundCheck.gd" type="Script" id=1]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 3.26486
+height = 17.2373
+
+[node name="GroundCheck" type="Area2D"]
+visible = false
+position = Vector2( 0, 15 )
+collision_layer = 0
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="JumpTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+[connection signal="body_entered" from="." to="." method="_on_GroundCheck_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_GroundCheck_body_exited"]
+[connection signal="timeout" from="JumpTimer" to="." method="_on_JumpTimer_timeout"]
