@@ -68,3 +68,11 @@ remote func ReceivePlayerState(player_state):
 #TODO: Define who to send to based on maps/chunks
 func SendWorldState(world_state):
 	rpc_unreliable_id(0, "ReceiveWorldState", world_state)
+	
+remote func FetchServerTime(client_time):
+	var player_id = get_tree().get_rpc_sender_id()
+	rpc_id(player_id, "ReturnServerTime", OS.get_system_time_msecs(), client_time)
+	
+remote func DetermineLatency(client_time):
+	var player_id = get_tree().get_rpc_sender_id()
+	rpc_id(player_id, "ReturnLatency", client_time)

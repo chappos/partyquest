@@ -9,6 +9,7 @@ export(float) var max_speed = 110
 export(float) var max_airspeed = 200
 export(float) var jump_height = 320
 
+onready var ui = $CanvasLayer/PlayerUI
 onready var state_machine = $MovementStateMachine
 onready var sprite = $Sprite
 onready var camera = $Camera2D
@@ -95,7 +96,7 @@ func handle_sprite_flip(input_x):
 		sprite.flip_h = true
 
 func connect_ui():
-	pass
+	ui.visible = true
 	
 func _on_state_changed(new_state):
 	sprite.set_animation(new_state)
