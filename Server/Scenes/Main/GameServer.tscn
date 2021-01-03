@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/Main/GameServer.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Main/PlayerVerification.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Main/StateProcessing.gd" type="Script" id=3]
 
 [node name="GameServer" type="Node"]
 script = ExtResource( 1 )
@@ -16,5 +17,8 @@ autostart = true
 [node name="TokenExpiration" type="Timer" parent="."]
 wait_time = 10.0
 autostart = true
+
+[node name="StateProcessing" type="Node" parent="."]
+script = ExtResource( 3 )
 [connection signal="timeout" from="PlayerVerification/VerificationExpiration" to="PlayerVerification" method="_on_VerificationExpiration_timeout"]
 [connection signal="timeout" from="TokenExpiration" to="." method="_on_TokenExpiration_timeout"]

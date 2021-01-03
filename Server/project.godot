@@ -23,6 +23,10 @@ config/icon="res://icon.png"
 
 HubConnection="*res://Scenes/Main/HubConnection.gd"
 
+[physics]
+
+common/physics_fps=20
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

@@ -11,6 +11,7 @@ export(float) var jump_height = 320
 
 onready var state_machine = $MovementStateMachine
 onready var sprite = $Sprite
+onready var camera = $Camera2D
 
 var grounded_cam_offset = Vector2(0, -10)
 var airborne_cam_offset = Vector2(0, 60)
@@ -25,33 +26,34 @@ func _ready():
 
 # warning-ignore:unused_argument
 func _physics_process(delta):
-	if is_dead:
-		return
-	
+	DefineNetworkedState()
+
+func DefineNetworkedState():
+	var state = {"T": OS.get_system_time_msecs(), "P": get_global_position()}
+	GameServer.SendPlayerState(state)
+
 func grounded_movement(delta: float):
-	if not is_dead:
-		var input_x = get_input_x()
-		direction = input_x
-		if input_x != 0:
-			velocity = velocity.move_toward(Vector2(input_x * max_speed, velocity.y), acceleration * delta)
-			handle_sprite_flip(input_x)
-		else:
-			velocity = velocity.move_toward(Vector2(0, velocity.y), friction * delta)
+	var input_x = get_input_x()
+	direction = input_x
+	if input_x != 0:
+		velocity = velocity.move_toward(Vector2(input_x * max_speed, velocity.y), acceleration * delta)
+		handle_sprite_flip(input_x)
+	else:
+		velocity = velocity.move_toward(Vector2(0, velocity.y), friction * delta)
 			
 		
 func aerial_movement(delta: float):
-	if not is_dead:
-		var input_x = get_input_x()
-		direction = input_x
-		if input_x != 0:
-			if max_speed >= abs(velocity.x) or (input_x > 0 and velocity.x < 0) or (input_x < 0 and velocity.x > 0):
-				velocity = velocity.move_toward(Vector2(input_x * max_speed, velocity.y), air_accel * delta)
-				handle_sprite_flip(input_x)
+	var input_x = get_input_x()
+	direction = input_x
+	if input_x != 0:
+		if max_speed >= abs(velocity.x) or (input_x > 0 and velocity.x < 0) or (input_x < 0 and velocity.x > 0):
+			velocity = velocity.move_toward(Vector2(input_x * max_speed, velocity.y), air_accel * delta)
+			handle_sprite_flip(input_x)
 				
-		if Input.is_action_just_released("jump"):
-			jump_cut()
+	if Input.is_action_just_released("jump"):
+		jump_cut()
 			
-		velocity = velocity.move_toward(Vector2(0, velocity.y), drag * delta)
+	velocity = velocity.move_toward(Vector2(0, velocity.y), drag * delta)
 		
 		
 	
@@ -64,8 +66,6 @@ func apply_movement(snap_to_ground: bool = true):
 	velocity = move_and_slide_with_snap(velocity, snap_vector, Vector2.UP)
 	
 func handle_jump():
-	if is_dead:
-		return
 	if Input.is_action_pressed("jump"):
 		if is_on_floor() and ground_check.is_grounded():
 			ground_check.on_parent_jumped()

@@ -4,8 +4,15 @@ var network = NetworkedMultiplayerENet.new()
 var ip = "127.0.0.1"
 #var ip = "106.68.238.174"
 var port = 1909
-
 var token
+
+signal login_succeeded
+signal login_failed
+
+signal spawn_player
+signal despawn_player
+
+signal world_state_updated
 
 func _ready():
 	pass
@@ -28,8 +35,18 @@ remote func FetchToken():
 	
 remote func ReturnTokenVerificationResults(result):
 	if result == true:
-		#handle login screen closing
-		print("Token validated successfully")
+		emit_signal("login_succeeded")
 	else:
-		#reenable login button
-		print("Login failed, please try again")
+		emit_signal("login_failed")
+		
+remote func SpawnNewPlayer(player_id, spawn_position):
+	emit_signal("spawn_player", player_id, spawn_position)
+	
+remote func DespawnPlayer(player_id):
+	emit_signal("despawn_player", player_id)
+	
+func SendPlayerState(player_state):
+	rpc_unreliable_id(1, "ReceivePlayerState", player_state)
+	
+remote func ReceiveWorldState(world_state):
+	emit_signal("world_state_updated", world_state)
