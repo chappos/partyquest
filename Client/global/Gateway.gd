@@ -3,6 +3,7 @@ extends Node
 var network = NetworkedMultiplayerENet.new()
 var gateway_api = MultiplayerAPI.new()
 var ip = "127.0.0.1"
+#var ip = "ec2-13-211-145-62.ap-southeast-2.compute.amazonaws.com"
 var port = 1910
 var cert = load("res://resources/certificate/X509_Certificate.crt")
 

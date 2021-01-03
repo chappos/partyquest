@@ -2,6 +2,9 @@ extends Node
 
 var network = NetworkedMultiplayerENet.new()
 var ip = "127.0.0.1"
+
+#EC2 Game Server
+#var ip = "172.31.47.233"
 var port = 1911
 
 func _ready():

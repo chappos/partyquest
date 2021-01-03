@@ -67,7 +67,7 @@ func _OnAccountCreateSucceeded():
 	login_screen.show()
 	
 func _OnAccountCreateFailed():
-	create_account_button.disabled = false
+	create_confirm_button.disabled = false
 	create_back_button.disabled = false
 
 

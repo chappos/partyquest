@@ -3,6 +3,8 @@ extends Node
 var network = NetworkedMultiplayerENet.new()
 var gateway_api = MultiplayerAPI.new()
 var ip = "127.0.0.1"
+#EC2 Authenticate Instance IP
+#var ip = "172.31.9.0"
 var port = 1912
 
 onready var gameserver = get_node("/root/GameServer")

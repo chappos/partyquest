@@ -31,7 +31,9 @@ func _physics_process(_delta):
 					continue
 				if other_players.has_node(str(player)):
 					var new_pos = lerp(world_state_buffer[1][player]["P"], world_state_buffer[2][player]["P"], interpolation_factor)
-					other_players.get_node(str(player)).MovePlayer(new_pos)
+					var sprite_flip = world_state_buffer[2][player]["A"]
+					
+					other_players.get_node(str(player)).MovePlayer(new_pos, sprite_flip)
 				else:
 					_on_spawn_player(player, world_state_buffer[2][player]["P"])
 		elif render_time > world_state_buffer[1].T: # No future world state available
@@ -46,7 +48,8 @@ func _physics_process(_delta):
 				if other_players.has_node(str(player)):
 					var pos_delta = (world_state_buffer[1][player]["P"] - world_state_buffer[0][player]["P"])
 					var new_pos = world_state_buffer[1][player]["P"] + (pos_delta * extrapolation_factor)
-					other_players.get_node(str(player)).MovePlayer(new_pos)
+					var sprite_flip = world_state_buffer[1][player]["A"]
+					other_players.get_node(str(player)).MovePlayer(new_pos, sprite_flip)
 
 	
 func _on_world_state_updated(world_state):
