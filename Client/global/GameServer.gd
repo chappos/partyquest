@@ -17,7 +17,7 @@ signal login_failed
 signal spawn_player
 signal despawn_player
 signal world_state_updated
-signal latency_updated(new_latency)
+signal latency_changed(new_latency)
 
 func _ready():
 	pass
@@ -69,7 +69,7 @@ remote func ReturnLatency(client_time):
 				total_latency += latency_array[i]
 		delta_latency = (total_latency / latency_array.size()) - latency
 		latency = total_latency / latency_array.size()
-		emit_signal("latency_updated", latency)
+		emit_signal("latency_changed", latency)
 		latency_array.clear()
 
 remote func FetchToken():
