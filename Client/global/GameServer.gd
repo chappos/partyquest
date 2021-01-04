@@ -19,6 +19,8 @@ signal despawn_player
 signal world_state_updated
 signal latency_changed(new_latency)
 
+signal new_chat_entry(player, text, original)
+
 func _ready():
 	pass
 	
@@ -71,6 +73,14 @@ remote func ReturnLatency(client_time):
 		latency = total_latency / latency_array.size()
 		emit_signal("latency_changed", latency)
 		latency_array.clear()
+		
+func SendChatEntry(text):
+	rpc_id(1, "ReceiveChatEntry", text)
+
+remote func ReturnChatEntry(player_id, text):
+	if player_id == get_tree().get_network_unique_id():
+		return
+	emit_signal("new_chat_entry", player_id, text)
 
 remote func FetchToken():
 	rpc_id(1, "ReturnToken", token)

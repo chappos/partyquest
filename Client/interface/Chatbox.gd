@@ -1,8 +1,7 @@
 extends Control
 
-onready var latency_label = $VBoxContainer/LatencyLabel
 onready var player_text = $VBoxContainer/PlayerChat/TextEdit
-onready var chatlog = $VBoxContainer/HBoxContainer/RichTextLabel
+onready var chatlog = $VBoxContainer/ChatLog/RichTextLabel
 
 signal chat_focused
 signal chat_unfocused
@@ -14,8 +13,6 @@ var max_chat_entries = 16
 
 func _ready():
 	chatlog.scroll_following = true
-# warning-ignore:return_value_discarded
-	GameServer.connect("latency_changed", self, "_on_latency_changed")
 # warning-ignore:return_value_discarded
 	GameServer.connect("new_chat_entry", self, "_on_new_chat_entry")
 
@@ -42,7 +39,3 @@ func _on_TextEdit_focus_entered():
 func _on_TextEdit_focus_exited():
 	emit_signal("chat_unfocused")
 	print("chat unfocused")
-	
-func _on_latency_changed(new_latency):
-	latency_label.set_text("Latency: " + str(new_latency))
-

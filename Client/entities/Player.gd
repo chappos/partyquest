@@ -16,6 +16,7 @@ onready var camera = $Camera2D
 
 var grounded_cam_offset = Vector2(0, -10)
 var airborne_cam_offset = Vector2(0, 60)
+var accepting_input = true
 var has_jump = false
 var direction = 1
 
@@ -34,24 +35,26 @@ func DefineNetworkedState():
 	GameServer.SendPlayerState(state)
 
 func grounded_movement(delta: float):
-	var input_x = get_input_x()
-	direction = input_x
-	if input_x != 0:
-		velocity = velocity.move_toward(Vector2(input_x * max_speed, velocity.y), acceleration * delta)
-		handle_sprite_flip(input_x)
-	else:
-		velocity = velocity.move_toward(Vector2(0, velocity.y), friction * delta)
+		var input_x = get_input_x()
+		direction = input_x
+		if input_x != 0:
+			if accepting_input:
+				velocity = velocity.move_toward(Vector2(input_x * max_speed, velocity.y), acceleration * delta)
+				handle_sprite_flip(input_x)
+		else:
+			velocity = velocity.move_toward(Vector2(0, velocity.y), friction * delta)
 			
 		
 func aerial_movement(delta: float):
 	var input_x = get_input_x()
 	direction = input_x
 	if input_x != 0:
-		if max_speed >= abs(velocity.x) or (input_x > 0 and velocity.x < 0) or (input_x < 0 and velocity.x > 0):
-			velocity = velocity.move_toward(Vector2(input_x * max_speed, velocity.y), air_accel * delta)
-			handle_sprite_flip(input_x)
+		if accepting_input:
+			if max_speed >= abs(velocity.x) or (input_x > 0 and velocity.x < 0) or (input_x < 0 and velocity.x > 0):
+				velocity = velocity.move_toward(Vector2(input_x * max_speed, velocity.y), air_accel * delta)
+				handle_sprite_flip(input_x)
 				
-	if Input.is_action_just_released("jump"):
+	if Input.is_action_just_released("jump") and accepting_input:
 		jump_cut()
 			
 	velocity = velocity.move_toward(Vector2(0, velocity.y), drag * delta)
@@ -67,7 +70,7 @@ func apply_movement(snap_to_ground: bool = true):
 	velocity = move_and_slide_with_snap(velocity, snap_vector, Vector2.UP)
 	
 func handle_jump():
-	if Input.is_action_pressed("jump"):
+	if Input.is_action_pressed("jump") and accepting_input:
 		if is_on_floor() and ground_check.is_grounded():
 			ground_check.on_parent_jumped()
 			
@@ -88,15 +91,23 @@ func jump_cut():
 	
 func get_input_x():
 	return Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
-
+	
 func handle_sprite_flip(input_x):
 	if velocity.x > 0 and input_x > 0:
 		sprite.flip_h = false
 	elif velocity.x < 0 and input_x < 0:
 		sprite.flip_h = true
 
+func _on_chat_focused():
+	accepting_input = false
+	
+func _on_chat_unfocused():
+	accepting_input = true
+
 func connect_ui():
 	ui.visible = true
+	ui.connect("chat_focused", self, "_on_chat_focused")
+	ui.connect("chat_unfocused", self, "_on_chat_unfocused")
 	
 func _on_state_changed(new_state):
 	sprite.set_animation(new_state)

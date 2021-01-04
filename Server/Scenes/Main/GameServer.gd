@@ -57,6 +57,14 @@ func ReturnTokenVerificationResults(player_id, result):
 		#TODO: Change hardcoded Vector2() to a spawn point derived from the players last stored map ID
 		rpc_id(0, "SpawnNewPlayer", player_id, Vector2(120, 108))
 
+remote func ReceiveChatEntry(text):
+	var player_id = get_tree().get_rpc_sender_id()
+	SendChatEntry(player_id, text)
+	
+func SendChatEntry(player_id, text):
+	#Validate player text, determine which players receive it
+	rpc_id(0, "ReturnChatEntry", player_id, text)
+
 remote func ReceivePlayerState(player_state):
 	var player_id = get_tree().get_rpc_sender_id()
 	if player_state_collection.has(player_id):
