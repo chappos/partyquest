@@ -7,19 +7,19 @@
 size = 8
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=2]
 size = 8
 extra_spacing_space = 2
+
+[sub_resource type="DynamicFont" id=3]
+size = 6
+font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 6
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=5]
-size = 6
-font_data = ExtResource( 1 )
-
-[sub_resource type="DynamicFont" id=2]
 size = 7
 extra_spacing_space = 1
 font_data = ExtResource( 1 )
@@ -42,7 +42,7 @@ __meta__ = {
 }
 
 [node name="LatencyLabel" type="Label" parent="VBoxContainer"]
-margin_right = 468.0
+margin_right = 320.0
 margin_bottom = 12.0
 focus_mode = 1
 custom_fonts/font = SubResource( 1 )
@@ -53,7 +53,7 @@ __meta__ = {
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
 margin_top = 16.0
-margin_right = 468.0
+margin_right = 320.0
 margin_bottom = 88.0
 rect_min_size = Vector2( 320, 72 )
 focus_mode = 1
@@ -70,8 +70,8 @@ margin_bottom = 60.0
 rect_min_size = Vector2( 172, 60 )
 focus_mode = 2
 mouse_filter = 1
-custom_fonts/mono_font = SubResource( 3 )
-custom_fonts/normal_font = SubResource( 4 )
+custom_fonts/mono_font = SubResource( 2 )
+custom_fonts/normal_font = SubResource( 3 )
 selection_enabled = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -85,7 +85,7 @@ rect_min_size = Vector2( 144, 60 )
 
 [node name="PlayerChat" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 156.0
-margin_right = 468.0
+margin_right = 320.0
 margin_bottom = 180.0
 rect_min_size = Vector2( 320, 24 )
 __meta__ = {
@@ -96,7 +96,7 @@ __meta__ = {
 margin_right = 20.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 20, 24 )
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 4 )
 text = "All"
 
 [node name="TextEdit" type="LineEdit" parent="VBoxContainer/PlayerChat"]
@@ -105,7 +105,7 @@ margin_right = 172.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 148, 20 )
 focus_mode = 1
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 5 )
 max_length = 100
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PlayerChat"]

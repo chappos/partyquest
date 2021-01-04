@@ -13,6 +13,7 @@ onready var ui = $CanvasLayer/PlayerUI
 onready var state_machine = $MovementStateMachine
 onready var sprite = $Sprite
 onready var camera = $Camera2D
+onready var chat_bubble = $ChatBubble
 
 var grounded_cam_offset = Vector2(0, -10)
 var airborne_cam_offset = Vector2(0, 60)
