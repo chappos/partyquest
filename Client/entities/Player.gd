@@ -1,13 +1,14 @@
 extends Entity
 class_name Player
 
-export(float) var acceleration = 1200
-export(float) var air_accel = 600
-export(float) var friction = 800
-export(float) var drag = 20
-export(float) var max_speed = 110
-export(float) var max_airspeed = 200
-export(float) var jump_height = 320
+export(float) var acceleration = 2400
+export(float) var air_accel = 900
+export(float) var friction = 1200
+export(float) var drag = 40
+export(float) var max_speed = 220
+export(float) var max_airspeed = 400
+export(float) var jump_height = 640
+export(float) var jump_cut_threshold = -440 
 
 onready var ui = $CanvasLayer/PlayerUI
 onready var state_machine = $MovementStateMachine
@@ -15,8 +16,7 @@ onready var sprite = $Sprite
 onready var camera = $Camera2D
 onready var chat_bubble = $ChatBubble
 
-var grounded_cam_offset = Vector2(0, -10)
-var airborne_cam_offset = Vector2(0, 60)
+var angled_jump_horizontal_bonus = 140
 var accepting_input = true
 var has_jump = false
 var direction = 1
@@ -68,7 +68,7 @@ func aerial_movement(delta: float):
 func apply_movement(snap_to_ground: bool = true):
 	var snap_vector = Vector2.ZERO
 	if snap_to_ground:
-		snap_vector = get_floor_normal() * 10.0
+		snap_vector = get_floor_normal() * 20.0
 	#move_and_slide_with_snap
 	velocity = move_and_slide_with_snap(velocity, snap_vector, Vector2.UP)
 	
@@ -80,7 +80,7 @@ func handle_jump():
 			#Handle angled jump
 			var last_floor_normal = get_floor_normal()
 			var jump_vel = Vector2.ZERO
-			jump_vel.x = velocity.x + (70 * last_floor_normal.x)
+			jump_vel.x = velocity.x + (angled_jump_horizontal_bonus * last_floor_normal.x)
 			jump_vel.x = clamp(jump_vel.x, -max_airspeed, max_airspeed)
 			jump_vel.y = -jump_height * -last_floor_normal.y
 			velocity = jump_vel
@@ -89,8 +89,8 @@ func handle_jump():
 		
 
 func jump_cut():
-	if velocity.y < -220:
-		velocity.y = -220
+	if velocity.y < jump_cut_threshold:
+		velocity.y = jump_cut_threshold
 	
 func get_input_x():
 	return Input.get_action_strength("move_right") - Input.get_action_strength("move_left")

@@ -69,7 +69,6 @@ func _process(_delta):
 	
 	
 
-
 func add_chat_bubble(new_text):
 	var new_bubble = chat_bubble.instance()
 	new_bubble.text = new_text
@@ -88,11 +87,9 @@ func _on_new_chat_entry(player_name, text):
 
 func _on_TextEdit_focus_entered():
 	emit_signal("chat_focused")
-	print("chat focused")
 
 func _on_TextEdit_focus_exited():
 	emit_signal("chat_unfocused")
-	print("chat unfocused")
 	
 func _on_latency_changed(new_latency):
 	latency_label.set_text("Latency: " + str(new_latency))

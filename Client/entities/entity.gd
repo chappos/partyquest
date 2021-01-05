@@ -2,9 +2,9 @@ extends KinematicBody2D
 class_name Entity
 
 export(float) var max_health = 50
-export(float) var gravity = 1400.0
-export(float) var terminal_velocity = 400
-export(float) var knockback_drag = 5.0
+export(float) var gravity = 2800.0
+export(float) var terminal_velocity = 800
+export(float) var knockback_drag = 10.0
 
 onready var ground_check = $GroundCheck
 

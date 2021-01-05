@@ -116,7 +116,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=21]
-extents = Vector2( 6.32132, 9.91896 )
+extents = Vector2( 6.5881, 15.3143 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 0
@@ -145,12 +145,13 @@ one_shot = true
 script = ExtResource( 9 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -16 )
+scale = Vector2( 2, 2 )
 frames = SubResource( 20 )
 animation = "Land"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2( 0, 5 )
 shape = SubResource( 21 )
 
 [node name="GroundCheck" parent="." instance=ExtResource( 7 )]
@@ -159,6 +160,7 @@ visible = false
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2( 0, -20 )
 current = true
+zoom = Vector2( 1.2, 1.2 )
 process_mode = 0
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
