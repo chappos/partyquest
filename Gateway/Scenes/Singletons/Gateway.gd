@@ -35,6 +35,30 @@ func _Peer_Connected(player_id):
 func _Peer_Disconnected(player_id):
 	print("User " + str(player_id) + " Disconnected")
 
+remote func RetreiveCharacterList(token):
+	var player_id = custom_multiplayer.get_rpc_sender_id()
+	Authenticate.RequestCharacterList(token, player_id)
+
+func ReturnCharacterListResults(char_list, player_id):
+	rpc_id(player_id, "ReturnCharacterList", char_list)
+
+remote func CreateCharacterRequest(char_name, char_sprite, token):
+	var player_id = custom_multiplayer.get_rpc_sender_id()
+	var valid_request = true
+	if char_name == "":
+		valid_request = false
+	if char_sprite > 2 or char_sprite < 0:
+		valid_request = false
+	
+	if valid_request == false:
+		ReturnCreateCharacterRequest(valid_request, player_id, 1)
+	else:
+		Authenticate.CreateCharacter(char_name, char_sprite, token, player_id)
+
+remote func ReturnCreateCharacterRequest(result, player_id, message):
+	rpc_id(player_id, "ReturnCreateCharacterResults", result, message)
+	network.disconnect_peer(player_id)
+
 remote func CreateAccountRequest(username, password):
 	var player_id = custom_multiplayer.get_rpc_sender_id()
 	var valid_request = true

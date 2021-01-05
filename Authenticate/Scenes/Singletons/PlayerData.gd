@@ -2,6 +2,7 @@ extends Node
 
 
 var PlayerIDs
+var template_character = {"CharSprite":"0", "Level":"1", "EXP":"0"}
 
 func _ready():
 	var playerdata_file = File.new()

@@ -6,6 +6,7 @@ var port = 1912
 var max_players = 100
 
 var gameserverlist = {}
+var current_players = {}
 
 func _ready():
 	StartServer()

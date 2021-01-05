@@ -5,6 +5,7 @@ var ip = "127.0.0.1"
 #var ip = "13.211.145.62"
 var port = 1909
 var token
+var session_user
 
 var client_clock : int = 0
 var decimal_collector : float = 0
@@ -74,6 +75,8 @@ remote func ReturnLatency(client_time):
 		emit_signal("latency_changed", latency)
 		latency_array.clear()
 		
+		
+
 func SendChatEntry(text):
 	rpc_id(1, "ReceiveChatEntry", text)
 

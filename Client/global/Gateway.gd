@@ -10,10 +10,13 @@ var cert = load("res://resources/certificate/X509_Certificate.crt")
 var username
 var password
 var new_account = false
+var char_select = false
 
 signal login_failed
 signal account_create_succeeded
 signal account_create_failed
+signal char_create_returned(result)
+signal char_list_received(char_list)
 
 func _ready():
 	pass
@@ -50,8 +53,23 @@ func _OnConnectionSucceeded():
 	print("Successfully connected to login server")
 	if new_account == true:
 		RequestCreateAccount()
+	elif char_select == true:
+		RequestCharacterList()
+		char_select = false
 	else:
 		RequestLogin()
+
+func RequestCharacterList():
+	rpc_id(1, "RetreiveCharacterList", GameServer.token)
+	
+remote func ReturnCharacterList(char_list):
+	emit_signal("char_list_received", char_list)
+
+func RequestCreateCharacter(char_name, char_sprite):
+	rpc_id(1, "CreateCharacterRequest", char_name, char_sprite, GameServer.token)
+	
+remote func ReturnCreateCharacterResults(result, _message):
+	emit_signal("char_create_returned", result)
 
 func RequestCreateAccount():
 	print("Requesting new account")

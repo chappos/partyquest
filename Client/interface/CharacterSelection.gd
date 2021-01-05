@@ -1,22 +1,42 @@
 extends Control
 
+onready var placeholder_one: PackedScene = preload("res://interface/components/PlaceholderChar1.tscn")
+onready var placeholder_two: PackedScene = preload("res://interface/components/PlaceHolderChar2.tscn")
+onready var placeholder_three: PackedScene = preload("res://interface/components/PlaceHolderChar3.tscn")
+
 onready var select_screen = $NinePatchRect/SelectScreen
 onready var create_screen = $NinePatchRect/CreateScreen
+onready var create_name_text = $NinePatchRect/CreateScreen/HBoxContainer2/LineEdit
+onready var create_confirm_button = $NinePatchRect/CreateScreen/HBoxContainer3/CreateConfirm
+onready var create_back_button = $NinePatchRect/CreateScreen/HBoxContainer3/CreateBackButton
 
 onready var character_choice_one = $NinePatchRect/CreateScreen/HBoxContainer/TextureButton/AnimatedSprite
 onready var character_choice_two = $NinePatchRect/CreateScreen/HBoxContainer/TextureButton2/AnimatedSprite
 onready var character_choice_three = $NinePatchRect/CreateScreen/HBoxContainer/TextureButton3/AnimatedSprite
 
+onready var slot_zero = $NinePatchRect/SelectScreen/HBoxContainer4/SelectButtonSlot0
+onready var slot_one = $NinePatchRect/SelectScreen/HBoxContainer4/SelectButtonSlot1
+onready var slot_two = $NinePatchRect/SelectScreen/HBoxContainer4/SelectButtonSlot2
+
+onready var select_slots = [slot_zero, slot_one, slot_two]
+onready var select_sprites = [character_choice_one, character_choice_two, character_choice_three]
+onready var sprite
+
+var char_list = null
 var selected_character = null
+var select_index = 0
 var unfocused_colour = Color(0.3, 0.3, 0.3, 1)
 var focused_colour = Color(1, 1, 1, 1)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	character_choice_one.modulate = unfocused_colour
-	character_choice_two.modulate = unfocused_colour
-	character_choice_three.modulate = unfocused_colour
-
+# warning-ignore:return_value_discarded
+	Gateway.connect("char_list_received", self, "_on_char_list_received")
+	Gateway.connect("char_create_returned", self, "_on_create_returned")
+	Gateway.char_select = true
+	Gateway.ConnectToServer("", "", false)
+	clear_selected()
+	
 
 func change_selected(new_selected):
 	if selected_character:
@@ -26,20 +46,98 @@ func change_selected(new_selected):
 	selected_character = new_selected
 	selected_character.modulate = focused_colour
 	selected_character.play()
+	
+func clear_selected():
+	character_choice_one.modulate = unfocused_colour
+	character_choice_two.modulate = unfocused_colour
+	character_choice_three.modulate = unfocused_colour
+	if selected_character:
+		selected_character.stop()
+		selected_character.set_frame(0)
+		selected_character = null
+
+func clear_placeholders():
+	for button in select_slots:
+		if button.get_child_count() > 1:
+			button.get_child(1).queue_free()
+
+func _on_char_list_received(new_list):
+	char_list = new_list
+	var count = 0
+	clear_placeholders()
+	for key in char_list.keys():
+		var new_anim = get_placeholder(key)
+		select_slots[count].get_child(0).text = key
+		select_slots[count].add_child(new_anim)
+		count += 1
+		
+func get_placeholder(key):
+	var new_anim
+	print(char_list[key].CharSprite)
+	match(char_list[key].CharSprite):
+		0:
+			new_anim = placeholder_one.instance()
+		1:
+			new_anim = placeholder_two.instance()
+			print(new_anim)
+		2:
+			new_anim = placeholder_three.instance()
+	return new_anim
+	
 
 func _on_TextureButton_pressed():
 	change_selected(character_choice_one)
+	select_index = 0
 
 func _on_TextureButton2_pressed():
 	change_selected(character_choice_two)
+	select_index = 1
 
 func _on_TextureButton3_pressed():
 	change_selected(character_choice_three)
+	select_index = 2
 
 func _on_ChangeToCreateButton_pressed():
 	select_screen.hide()
 	create_screen.show()
+	clear_selected()
 
 func _on_CreateBackButton_pressed():
 	create_screen.hide()
 	select_screen.show()
+	clear_selected()
+	Gateway.char_select = true
+	Gateway.ConnectToServer("", "", false)
+
+func _on_CreateConfirm_pressed():
+	if create_name_text.text == "":
+		print("Name cannot be blank")
+		return
+	if create_name_text.text.length() > 12:
+		print("Name must not exceed 12 characters")
+		return
+	if selected_character == null:
+		print("You must choose a character")
+		return
+	
+	create_back_button.disabled = true
+	create_confirm_button.disabled = true
+	Gateway.RequestCreateCharacter(create_name_text.text, select_index)
+
+func _on_create_returned(result):
+	create_back_button.disabled = false
+	create_confirm_button.disabled = false
+	if result:
+		_on_CreateBackButton_pressed()
+	else:
+		print("Unable to create new character")
+
+
+func _on_SelectButtonSlot0_pressed():
+	print("SELECTED ONE")
+
+func _on_SelectButtonSlot1_pressed():
+	print("SELECTED TWO")
+
+func _on_SelectButtonSlot2_pressed():
+	print("SELECTED THREE")
