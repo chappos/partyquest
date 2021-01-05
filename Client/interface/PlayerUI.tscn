@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/ui/Fonts/PatrickHand-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://interface/PlayerUI.gd" type="Script" id=2]
+[ext_resource path="res://assets/ui/chat_minimize.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/chat_minimize_pressed.png" type="Texture" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 14
@@ -89,6 +91,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/HBoxContainer/RichTextLabel"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -12.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 12, 12 )
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
 margin_left = 198.0
 margin_right = 640.0
@@ -127,5 +141,6 @@ margin_right = 639.0
 margin_bottom = 28.0
 rect_min_size = Vector2( 442, 28 )
 focus_mode = 1
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/RichTextLabel/TextureButton" to="." method="_on_TextureButton_pressed"]
 [connection signal="focus_entered" from="VBoxContainer/PlayerChat/TextEdit" to="." method="_on_TextEdit_focus_entered"]
 [connection signal="focus_exited" from="VBoxContainer/PlayerChat/TextEdit" to="." method="_on_TextEdit_focus_exited"]

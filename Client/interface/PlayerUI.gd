@@ -13,6 +13,7 @@ signal chat_unfocused
 var my_name = "Me"
 
 var max_chat_entries = 16
+var player_text_can_release_focus = false # Used to manage double arrow out of chat
 
 func _ready():
 	chatlog.scroll_following = true
@@ -22,26 +23,52 @@ func _ready():
 	GameServer.connect("new_chat_entry", self, "_on_new_chat_entry")
 
 func _process(_delta):	
-	if Input.is_action_just_pressed("chat_toggle"):
-		if !player_text.has_focus():
+	if player_text.has_focus():
+		if Input.is_action_just_pressed("ui_cancel"):
+			player_text.release_focus()
+		
+		if Input.is_action_just_pressed("ui_accept"):
+			if player_text.text == "":
+				player_text.release_focus()
+			else:
+				var new_text = player_text.get_text()
+				GameServer.SendChatEntry(new_text)
+				player_text.clear()
+				add_chat_entry(my_name + ": " + new_text)
+				add_chat_bubble(my_name + ": " + new_text)
+				chatlog.show()
+				
+		if Input.is_action_just_pressed("ui_left"):
+			if player_text.caret_position == 0:
+				if player_text_can_release_focus:
+					player_text.release_focus()
+					player_text_can_release_focus = false
+				else:
+					player_text_can_release_focus = true
+			else:
+				player_text_can_release_focus = false
+		
+		if Input.is_action_just_pressed("ui_right"):
+			if player_text.caret_position == player_text.text.length():
+				if player_text_can_release_focus:
+					player_text.release_focus()
+					player_text_can_release_focus = false
+				else:
+					player_text_can_release_focus = true
+			else:
+				player_text_can_release_focus = false
+	else:
+		if Input.is_action_just_pressed("chat_toggle"):
 			if chatlog.visible:
 				chatlog.hide()
 			else:
 				chatlog.show()
-	
-	if Input.is_action_just_pressed("ui_cancel"):
-		if player_text.has_focus():
-			player_text.release_focus()
-	
-	if Input.is_action_just_pressed("ui_accept"):
-		if player_text.has_focus():
-			var new_text = player_text.get_text()
-			GameServer.SendChatEntry(new_text)
-			player_text.clear()
-			add_chat_entry(my_name + ": " + new_text)
-			add_chat_bubble(my_name + ": " + new_text)
-		else:
+		
+		if Input.is_action_just_pressed("ui_accept"):
 			player_text.grab_focus()
+	
+	
+
 
 func add_chat_bubble(new_text):
 	var new_bubble = chat_bubble.instance()
@@ -70,3 +97,5 @@ func _on_TextEdit_focus_exited():
 func _on_latency_changed(new_latency):
 	latency_label.set_text("Latency: " + str(new_latency))
 
+func _on_TextureButton_pressed():
+	chatlog.hide()
