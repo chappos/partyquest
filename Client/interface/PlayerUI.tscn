@@ -68,10 +68,14 @@ margin_right = 640.0
 margin_bottom = 296.0
 rect_min_size = Vector2( 640, 90 )
 
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
+margin_bottom = 90.0
+
 [node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/HBoxContainer"]
+margin_left = 4.0
 margin_right = 194.0
 margin_bottom = 90.0
-rect_min_size = Vector2( 194, 90 )
+rect_min_size = Vector2( 190, 90 )
 focus_mode = 1
 mouse_filter = 1
 custom_fonts/mono_font = SubResource( 2 )
@@ -128,16 +132,16 @@ text = "All"
 
 [node name="TextEdit" type="LineEdit" parent="VBoxContainer/PlayerChat"]
 margin_left = 28.0
-margin_right = 193.0
+margin_right = 194.0
 margin_bottom = 28.0
-rect_min_size = Vector2( 165, 28 )
+rect_min_size = Vector2( 166, 28 )
 focus_mode = 1
 custom_fonts/font = SubResource( 5 )
 max_length = 100
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PlayerChat"]
-margin_left = 197.0
-margin_right = 639.0
+margin_left = 198.0
+margin_right = 640.0
 margin_bottom = 28.0
 rect_min_size = Vector2( 442, 28 )
 focus_mode = 1

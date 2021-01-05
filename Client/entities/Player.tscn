@@ -116,7 +116,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=21]
-extents = Vector2( 6.5881, 15.3143 )
+extents = Vector2( 6, 2 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 0
@@ -151,7 +151,7 @@ frames = SubResource( 20 )
 animation = "Land"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
+position = Vector2( 0, 12 )
 shape = SubResource( 21 )
 
 [node name="GroundCheck" parent="." instance=ExtResource( 7 )]

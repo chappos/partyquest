@@ -2,7 +2,7 @@ extends Entity
 class_name Player
 
 export(float) var acceleration = 2400
-export(float) var air_accel = 900
+export(float) var air_accel = 600
 export(float) var friction = 1200
 export(float) var drag = 40
 export(float) var max_speed = 220
@@ -16,7 +16,7 @@ onready var sprite = $Sprite
 onready var camera = $Camera2D
 onready var chat_bubble = $ChatBubble
 
-var angled_jump_horizontal_bonus = 140
+var angled_jump_horizontal_bonus = 180
 var accepting_input = true
 var has_jump = false
 var direction = 1
@@ -114,3 +114,4 @@ func connect_ui():
 	
 func _on_state_changed(new_state):
 	sprite.set_animation(new_state)
+

@@ -55,7 +55,7 @@ func ReturnTokenVerificationResults(player_id, result):
 	rpc_id(player_id, "ReturnTokenVerificationResults", result)
 	if result == true:
 		#TODO: Change hardcoded Vector2() to a spawn point derived from the players last stored map ID
-		rpc_id(0, "SpawnNewPlayer", player_id, Vector2(120, 108))
+		rpc_id(0, "SpawnNewPlayer", player_id, Vector2.ZERO)
 
 remote func ReceiveChatEntry(text):
 	var player_id = get_tree().get_rpc_sender_id()
