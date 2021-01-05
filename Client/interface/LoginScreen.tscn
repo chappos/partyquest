@@ -40,7 +40,7 @@ __meta__ = {
 }
 
 [node name="BackgroundTexture" type="TextureRect" parent="."]
-modulate = Color( 0.329412, 0.298039, 0.298039, 1 )
+modulate = Color( 0.298039, 0.298039, 0.298039, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 1 )
@@ -56,7 +56,7 @@ margin_left = 160.0
 margin_top = 20.0
 margin_right = -160.0
 margin_bottom = -20.0
-rect_min_size = Vector2( 180, 180 )
+rect_min_size = Vector2( 320, 320 )
 texture = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false

@@ -1,0 +1,9 @@
+idle = 0 - 4
+run = 5 - 12
+jump = 13 - 15
+fall = 16 - 17
+ground impact = 18
+attack = 19 - 21
+taking damage = 22
+dead = 23 - 25
+shield blocking = 26 - 27

@@ -14,8 +14,7 @@ onready var create_confirm_password_input = $NinePatchRect/CreateAccount/Passwor
 onready var create_confirm_button = $NinePatchRect/CreateAccount/ConfirmButton
 onready var create_back_button = $NinePatchRect/CreateAccount/BackButton
 
-#TODO: remove this shit
-onready var world_node: PackedScene = preload("res://World.tscn")
+onready var char_select_screen: PackedScene = preload("res://interface/CharacterSelection.tscn")
 
 func _ready():
 # warning-ignore:return_value_discarded
@@ -52,8 +51,8 @@ func _on_LoginButton_pressed():
 		Gateway.ConnectToServer(username, password, false)
 
 func _OnLoginSucceeded():
-	var new_world = world_node.instance()
-	get_tree().get_root().add_child(new_world)
+	var char_select = char_select_screen.instance()
+	get_tree().get_root().add_child(char_select)
 	self.call_deferred("queue_free")
 
 func _OnLoginFailed():
