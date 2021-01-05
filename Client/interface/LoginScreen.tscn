@@ -8,27 +8,27 @@
 [ext_resource path="res://assets/ui/Fonts/PatrickHand-Regular.ttf" type="DynamicFontData" id=6]
 
 [sub_resource type="DynamicFont" id=1]
-size = 10
+size = 24
 font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=2]
-size = 8
+size = 14
 font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=3]
-size = 8
+size = 14
 font_data = ExtResource( 6 )
 
 [sub_resource type="DynamicFont" id=4]
-size = 8
+size = 14
 font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=5]
-size = 8
+size = 14
 font_data = ExtResource( 6 )
 
 [sub_resource type="DynamicFont" id=6]
-size = 6
+size = 12
 font_data = ExtResource( 6 )
 
 [node name="LoginScreen" type="Control"]
@@ -50,14 +50,12 @@ __meta__ = {
 }
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -90.0
-margin_top = -90.0
-margin_right = 90.0
-margin_bottom = 90.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 160.0
+margin_top = 20.0
+margin_right = -160.0
+margin_bottom = -20.0
 rect_min_size = Vector2( 180, 180 )
 texture = ExtResource( 1 )
 __meta__ = {
@@ -76,51 +74,51 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer4" type="MarginContainer" parent="NinePatchRect/LoginScreen"]
-margin_top = 12.0
-margin_right = 164.0
-margin_bottom = 14.0
-rect_min_size = Vector2( 0, 2 )
-
 [node name="TitleLabel" type="Label" parent="NinePatchRect/LoginScreen"]
-margin_top = 18.0
-margin_right = 164.0
-margin_bottom = 29.0
+margin_top = 28.0
+margin_right = 304.0
+margin_bottom = 52.0
 custom_fonts/font = SubResource( 1 )
 text = "Login"
 align = 1
 valign = 1
 
+[node name="MarginContainer4" type="MarginContainer" parent="NinePatchRect/LoginScreen"]
+margin_top = 56.0
+margin_right = 304.0
+margin_bottom = 68.0
+rect_min_size = Vector2( 0, 12 )
+
 [node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/LoginScreen"]
-margin_top = 33.0
-margin_right = 164.0
-margin_bottom = 35.0
-rect_min_size = Vector2( 0, 2 )
+margin_top = 72.0
+margin_right = 304.0
+margin_bottom = 84.0
+rect_min_size = Vector2( 0, 12 )
 
 [node name="UsernameLabel" type="Label" parent="NinePatchRect/LoginScreen"]
-margin_top = 39.0
-margin_right = 164.0
-margin_bottom = 47.0
+margin_top = 88.0
+margin_right = 304.0
+margin_bottom = 103.0
 custom_fonts/font = SubResource( 2 )
 text = "Email/Username"
 
 [node name="UsernameEdit" type="LineEdit" parent="NinePatchRect/LoginScreen"]
-margin_top = 51.0
-margin_right = 164.0
-margin_bottom = 73.0
+margin_top = 107.0
+margin_right = 304.0
+margin_bottom = 137.0
 custom_fonts/font = SubResource( 3 )
 placeholder_text = "Enter Email Address"
 
 [node name="MarginContainer3" type="MarginContainer" parent="NinePatchRect/LoginScreen"]
-margin_top = 77.0
-margin_right = 164.0
-margin_bottom = 79.0
-rect_min_size = Vector2( 0, 2 )
+margin_top = 141.0
+margin_right = 304.0
+margin_bottom = 155.0
+rect_min_size = Vector2( 0, 14 )
 
 [node name="PasswordLabel" type="Label" parent="NinePatchRect/LoginScreen"]
-margin_top = 83.0
-margin_right = 164.0
-margin_bottom = 91.0
+margin_top = 159.0
+margin_right = 304.0
+margin_bottom = 174.0
 custom_fonts/font = SubResource( 4 )
 text = "Password"
 __meta__ = {
@@ -128,25 +126,25 @@ __meta__ = {
 }
 
 [node name="PasswordEdit" type="LineEdit" parent="NinePatchRect/LoginScreen"]
-margin_top = 95.0
-margin_right = 164.0
-margin_bottom = 117.0
+margin_top = 178.0
+margin_right = 304.0
+margin_bottom = 208.0
 custom_fonts/font = SubResource( 5 )
 secret = true
 placeholder_text = "Enter Password"
 
 [node name="MarginContainer2" type="MarginContainer" parent="NinePatchRect/LoginScreen"]
-margin_top = 121.0
-margin_right = 164.0
-margin_bottom = 123.0
-rect_min_size = Vector2( 0, 2 )
+margin_top = 212.0
+margin_right = 304.0
+margin_bottom = 224.0
+rect_min_size = Vector2( 0, 12 )
 
 [node name="LoginButton" type="TextureButton" parent="NinePatchRect/LoginScreen"]
-margin_left = 61.0
-margin_top = 127.0
-margin_right = 103.0
-margin_bottom = 139.0
-rect_min_size = Vector2( 42, 12 )
+margin_left = 110.0
+margin_top = 228.0
+margin_right = 194.0
+margin_bottom = 252.0
+rect_min_size = Vector2( 84, 24 )
 size_flags_horizontal = 4
 texture_normal = ExtResource( 3 )
 texture_pressed = ExtResource( 2 )
@@ -164,11 +162,11 @@ __meta__ = {
 }
 
 [node name="CreateAccountButton" type="TextureButton" parent="NinePatchRect/LoginScreen"]
-margin_left = 61.0
-margin_top = 143.0
-margin_right = 103.0
-margin_bottom = 155.0
-rect_min_size = Vector2( 42, 12 )
+margin_left = 110.0
+margin_top = 256.0
+margin_right = 194.0
+margin_bottom = 280.0
+rect_min_size = Vector2( 84, 24 )
 size_flags_horizontal = 4
 texture_normal = ExtResource( 3 )
 texture_pressed = ExtResource( 2 )
@@ -198,33 +196,52 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="MarginContainer9" type="MarginContainer" parent="NinePatchRect/CreateAccount"]
+margin_top = 6.0
+margin_right = 304.0
+margin_bottom = 8.0
+rect_min_size = Vector2( 0, 2 )
+
 [node name="TitleLabel" type="Label" parent="NinePatchRect/CreateAccount"]
-margin_right = 164.0
-margin_bottom = 25.0
+margin_top = 12.0
+margin_right = 304.0
+margin_bottom = 63.0
 custom_fonts/font = SubResource( 1 )
 text = "Create
 Account"
 align = 1
 valign = 1
 
+[node name="MarginContainer5" type="MarginContainer" parent="NinePatchRect/CreateAccount"]
+margin_top = 67.0
+margin_right = 304.0
+margin_bottom = 71.0
+rect_min_size = Vector2( 0, 4 )
+
 [node name="UsernameLabel" type="Label" parent="NinePatchRect/CreateAccount"]
-margin_top = 29.0
-margin_right = 164.0
-margin_bottom = 37.0
+margin_top = 75.0
+margin_right = 304.0
+margin_bottom = 90.0
 custom_fonts/font = SubResource( 2 )
 text = "Email"
 
 [node name="UsernameEdit" type="LineEdit" parent="NinePatchRect/CreateAccount"]
-margin_top = 41.0
-margin_right = 164.0
-margin_bottom = 63.0
+margin_top = 94.0
+margin_right = 304.0
+margin_bottom = 124.0
 custom_fonts/font = SubResource( 3 )
 placeholder_text = "Enter Email Address"
 
+[node name="MarginContainer6" type="MarginContainer" parent="NinePatchRect/CreateAccount"]
+margin_top = 128.0
+margin_right = 304.0
+margin_bottom = 132.0
+rect_min_size = Vector2( 0, 4 )
+
 [node name="PasswordLabel" type="Label" parent="NinePatchRect/CreateAccount"]
-margin_top = 67.0
-margin_right = 164.0
-margin_bottom = 75.0
+margin_top = 136.0
+margin_right = 304.0
+margin_bottom = 151.0
 custom_fonts/font = SubResource( 4 )
 text = "Password"
 __meta__ = {
@@ -232,17 +249,23 @@ __meta__ = {
 }
 
 [node name="PasswordEdit" type="LineEdit" parent="NinePatchRect/CreateAccount"]
-margin_top = 79.0
-margin_right = 164.0
-margin_bottom = 101.0
+margin_top = 155.0
+margin_right = 304.0
+margin_bottom = 185.0
 custom_fonts/font = SubResource( 5 )
 secret = true
 placeholder_text = "Enter Password"
 
+[node name="MarginContainer7" type="MarginContainer" parent="NinePatchRect/CreateAccount"]
+margin_top = 189.0
+margin_right = 304.0
+margin_bottom = 193.0
+rect_min_size = Vector2( 0, 4 )
+
 [node name="ConfirmPasswordLabel" type="Label" parent="NinePatchRect/CreateAccount"]
-margin_top = 105.0
-margin_right = 164.0
-margin_bottom = 113.0
+margin_top = 197.0
+margin_right = 304.0
+margin_bottom = 212.0
 custom_fonts/font = SubResource( 4 )
 text = "Confirm Password"
 __meta__ = {
@@ -250,19 +273,25 @@ __meta__ = {
 }
 
 [node name="PasswordEdit2" type="LineEdit" parent="NinePatchRect/CreateAccount"]
-margin_top = 117.0
-margin_right = 164.0
-margin_bottom = 139.0
+margin_top = 216.0
+margin_right = 304.0
+margin_bottom = 246.0
 custom_fonts/font = SubResource( 5 )
 secret = true
 placeholder_text = "Confirm Password"
 
+[node name="MarginContainer8" type="MarginContainer" parent="NinePatchRect/CreateAccount"]
+margin_top = 250.0
+margin_right = 304.0
+margin_bottom = 254.0
+rect_min_size = Vector2( 0, 4 )
+
 [node name="ConfirmButton" type="TextureButton" parent="NinePatchRect/CreateAccount"]
-margin_left = 61.0
-margin_top = 143.0
-margin_right = 103.0
-margin_bottom = 155.0
-rect_min_size = Vector2( 42, 12 )
+margin_left = 110.0
+margin_top = 258.0
+margin_right = 194.0
+margin_bottom = 282.0
+rect_min_size = Vector2( 84, 24 )
 size_flags_horizontal = 4
 texture_normal = ExtResource( 3 )
 texture_pressed = ExtResource( 2 )
@@ -280,11 +309,11 @@ __meta__ = {
 }
 
 [node name="BackButton" type="TextureButton" parent="NinePatchRect/CreateAccount"]
-margin_left = 61.0
-margin_top = 159.0
-margin_right = 103.0
-margin_bottom = 171.0
-rect_min_size = Vector2( 42, 12 )
+margin_left = 110.0
+margin_top = 286.0
+margin_right = 194.0
+margin_bottom = 310.0
+rect_min_size = Vector2( 84, 24 )
 size_flags_horizontal = 4
 texture_normal = ExtResource( 3 )
 texture_pressed = ExtResource( 2 )

@@ -37,23 +37,25 @@ func DefineNetworkedState():
 
 func grounded_movement(delta: float):
 		var input_x = get_input_x()
-		direction = input_x
+		direction = 0
 		if input_x != 0:
 			if accepting_input:
 				velocity = velocity.move_toward(Vector2(input_x * max_speed, velocity.y), acceleration * delta)
 				handle_sprite_flip(input_x)
+				direction = input_x
 		else:
 			velocity = velocity.move_toward(Vector2(0, velocity.y), friction * delta)
 			
 		
 func aerial_movement(delta: float):
 	var input_x = get_input_x()
-	direction = input_x
+	direction = 0
 	if input_x != 0:
 		if accepting_input:
 			if max_speed >= abs(velocity.x) or (input_x > 0 and velocity.x < 0) or (input_x < 0 and velocity.x > 0):
 				velocity = velocity.move_toward(Vector2(input_x * max_speed, velocity.y), air_accel * delta)
 				handle_sprite_flip(input_x)
+				direction = input_x
 				
 	if Input.is_action_just_released("jump") and accepting_input:
 		jump_cut()

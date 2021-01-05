@@ -22,6 +22,17 @@ func _ready():
 	GameServer.connect("new_chat_entry", self, "_on_new_chat_entry")
 
 func _process(_delta):	
+	if Input.is_action_just_pressed("chat_toggle"):
+		if !player_text.has_focus():
+			if chatlog.visible:
+				chatlog.hide()
+			else:
+				chatlog.show()
+	
+	if Input.is_action_just_pressed("ui_cancel"):
+		if player_text.has_focus():
+			player_text.release_focus()
+	
 	if Input.is_action_just_pressed("ui_accept"):
 		if player_text.has_focus():
 			var new_text = player_text.get_text()
@@ -29,6 +40,8 @@ func _process(_delta):
 			player_text.clear()
 			add_chat_entry(my_name + ": " + new_text)
 			add_chat_bubble(my_name + ": " + new_text)
+		else:
+			player_text.grab_focus()
 
 func add_chat_bubble(new_text):
 	var new_bubble = chat_bubble.instance()

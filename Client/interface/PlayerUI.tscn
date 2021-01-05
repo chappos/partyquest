@@ -4,7 +4,7 @@
 [ext_resource path="res://interface/PlayerUI.gd" type="Script" id=2]
 
 [sub_resource type="DynamicFont" id=1]
-size = 8
+size = 14
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=2]
@@ -12,15 +12,15 @@ size = 8
 extra_spacing_space = 2
 
 [sub_resource type="DynamicFont" id=3]
-size = 6
+size = 10
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=4]
-size = 6
+size = 10
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=5]
-size = 7
+size = 10
 extra_spacing_space = 1
 font_data = ExtResource( 1 )
 
@@ -35,15 +35,17 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_bottom = 1.52588e-05
-rect_min_size = Vector2( 320, 180 )
+margin_bottom = 3.05176e-05
+rect_min_size = Vector2( 640, 360 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LatencyLabel" type="Label" parent="VBoxContainer"]
-margin_right = 320.0
-margin_bottom = 12.0
+margin_top = -1.0
+margin_right = 640.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 640, 24 )
 focus_mode = 1
 custom_fonts/font = SubResource( 1 )
 text = "Latency: 0"
@@ -52,23 +54,23 @@ __meta__ = {
 }
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
-margin_top = 16.0
-margin_right = 320.0
-margin_bottom = 88.0
-rect_min_size = Vector2( 320, 72 )
+margin_top = 28.0
+margin_right = 640.0
+margin_bottom = 202.0
+rect_min_size = Vector2( 640, 174 )
 focus_mode = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 92.0
-margin_right = 320.0
-margin_bottom = 152.0
-rect_min_size = Vector2( 320, 60 )
+margin_top = 206.0
+margin_right = 640.0
+margin_bottom = 296.0
+rect_min_size = Vector2( 640, 90 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/HBoxContainer"]
-margin_right = 172.0
-margin_bottom = 60.0
-rect_min_size = Vector2( 172, 60 )
-focus_mode = 2
+margin_right = 194.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 194, 90 )
+focus_mode = 1
 mouse_filter = 1
 custom_fonts/mono_font = SubResource( 2 )
 custom_fonts/normal_font = SubResource( 3 )
@@ -77,42 +79,53 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/HBoxContainer/RichTextLabel"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0.25098, 0.25098, 0.25098, 0.67451 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
-margin_left = 176.0
-margin_right = 320.0
-margin_bottom = 60.0
-rect_min_size = Vector2( 144, 60 )
+margin_left = 198.0
+margin_right = 640.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 442, 90 )
+focus_mode = 1
 
 [node name="PlayerChat" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 156.0
-margin_right = 320.0
-margin_bottom = 180.0
-rect_min_size = Vector2( 320, 24 )
+margin_top = 300.0
+margin_right = 640.0
+margin_bottom = 328.0
+rect_min_size = Vector2( 640, 28 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="MenuButton" type="MenuButton" parent="VBoxContainer/PlayerChat"]
-margin_right = 20.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 20, 24 )
+margin_right = 24.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 24, 24 )
 custom_fonts/font = SubResource( 4 )
 text = "All"
 
 [node name="TextEdit" type="LineEdit" parent="VBoxContainer/PlayerChat"]
-margin_left = 24.0
-margin_right = 172.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 148, 20 )
+margin_left = 28.0
+margin_right = 193.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 165, 28 )
 focus_mode = 1
 custom_fonts/font = SubResource( 5 )
 max_length = 100
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PlayerChat"]
-margin_left = 176.0
-margin_right = 320.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 144, 24 )
+margin_left = 197.0
+margin_right = 639.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 442, 28 )
 focus_mode = 1
 [connection signal="focus_entered" from="VBoxContainer/PlayerChat/TextEdit" to="." method="_on_TextEdit_focus_entered"]
 [connection signal="focus_exited" from="VBoxContainer/PlayerChat/TextEdit" to="." method="_on_TextEdit_focus_exited"]

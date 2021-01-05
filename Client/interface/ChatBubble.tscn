@@ -4,14 +4,15 @@
 [ext_resource path="res://assets/ui/Fonts/PatrickHand-Regular.ttf" type="DynamicFontData" id=2]
 
 [sub_resource type="DynamicFont" id=1]
-size = 8
+size = 10
+outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 2 )
 
 [node name="ChatBubble" type="Label"]
 margin_left = -20.0
-margin_top = -20.0
+margin_top = -30.0
 margin_right = 20.0
-margin_bottom = -8.0
+margin_bottom = -15.0
 grow_vertical = 0
 rect_min_size = Vector2( 40, 0 )
 custom_fonts/font = SubResource( 1 )
@@ -26,4 +27,13 @@ __meta__ = {
 wait_time = 4.0
 one_shot = true
 autostart = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.207843, 0.207843, 0.207843, 0.698039 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
