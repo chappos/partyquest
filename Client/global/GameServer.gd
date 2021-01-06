@@ -1,8 +1,8 @@
 extends Node
 
 var network = NetworkedMultiplayerENet.new()
-#var ip = "127.0.0.1"
-var ip = "54.153.235.92"
+var ip = "127.0.0.1"
+#var ip = "54.79.87.114"
 var port = 1909
 var token
 var session_user
@@ -23,7 +23,7 @@ signal despawn_player
 signal world_state_updated
 signal latency_changed(new_latency)
 
-signal new_chat_entry(player, text, original)
+signal new_chat_entry(player_id, player_name, text, original)
 
 func _ready():
 	pass
@@ -106,10 +106,10 @@ remote func ReturnJoinGameWorldResults(result):
 func SendChatEntry(text):
 	rpc_id(1, "ReceiveChatEntry", text)
 
-remote func ReturnChatEntry(player_id, text):
+remote func ReturnChatEntry(player_id, player_name, text):
 	if player_id == get_tree().get_network_unique_id():
 		return
-	emit_signal("new_chat_entry", player_id, text)
+	emit_signal("new_chat_entry", player_id, player_name, text)
 
 remote func FetchToken():
 	rpc_id(1, "ReturnToken", token)

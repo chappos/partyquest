@@ -93,8 +93,12 @@ remote func ReceiveChatEntry(text):
 	SendChatEntry(player_id, text)
 	
 func SendChatEntry(player_id, text):
+	var player_name = str(player_id)
+	for child in get_children():
+		if child.name == player_name:
+			player_name = child.player_name
 	#Validate player text, determine which players receive it
-	rpc_id(0, "ReturnChatEntry", player_id, text)
+	rpc_id(0, "ReturnChatEntry", player_id, player_name, text)
 
 remote func ReceivePlayerState(player_state):
 	var player_id = get_tree().get_rpc_sender_id()

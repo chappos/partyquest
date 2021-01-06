@@ -35,13 +35,12 @@ func MovePlayer(new_position, flip):
 			sprite.animation = "Airborne"
 	sprite.flip_h = flip
 
-func _on_new_chat_entry(player_id, new_text):
+func _on_new_chat_entry(player_id, player_name, new_text):
 	var chatter = str(player_id)
 	if chatter != self.name:
 		return
 	var new_bubble = chat_bubble.instance()
-	var my_name = char_name.get_text()
-	new_bubble.text = my_name + ": " + new_text
+	new_bubble.text = player_name + ": " + new_text
 	if bubble_pos.get_child_count() > 0:
 		bubble_pos.get_child(0).queue_free()
 	bubble_pos.add_child(new_bubble)

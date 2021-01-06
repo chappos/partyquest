@@ -82,8 +82,8 @@ func add_chat_entry(new_chat_entry):
 	if chatlog.get_line_count() > max_chat_entries:
 		chatlog.remove_line(0)
 
-func _on_new_chat_entry(player_name, text):
-	var new_chat_entry = str(player_name) + ": " + text
+func _on_new_chat_entry(_player_id, player_name, text):
+	var new_chat_entry = player_name + ": " + text
 	add_chat_entry(new_chat_entry)
 
 func _on_TextEdit_focus_entered():
