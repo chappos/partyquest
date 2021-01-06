@@ -6,8 +6,7 @@ onready var chatlog = $VBoxContainer/ChatLog/RichTextLabel
 signal chat_focused
 signal chat_unfocused
 
-#TODO: Make this the characters name
-var my_name = "Me"
+var my_name 
 
 var max_chat_entries = 16
 
@@ -15,6 +14,7 @@ func _ready():
 	chatlog.scroll_following = true
 # warning-ignore:return_value_discarded
 	GameServer.connect("new_chat_entry", self, "_on_new_chat_entry")
+	my_name = Global.char_name
 
 func _process(_delta):	
 	if Input.is_action_just_pressed("ui_accept"):

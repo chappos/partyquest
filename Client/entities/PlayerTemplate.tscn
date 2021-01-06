@@ -1,112 +1,10 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://entities/components/GroundCheckCast.tscn" type="PackedScene" id=1]
+[ext_resource path="res://entities/components/PlaceHolderChar3.tscn" type="PackedScene" id=2]
+[ext_resource path="res://entities/components/PlaceHolderChar1.tscn" type="PackedScene" id=3]
+[ext_resource path="res://entities/components/PlaceHolderChar2.tscn" type="PackedScene" id=4]
 [ext_resource path="res://entities/PlayerTemplate.gd" type="Script" id=6]
-[ext_resource path="res://assets/sprites/entities/player/knight 1 sword 2.png" type="Texture" id=9]
-
-[sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 9 )
-region = Rect2( 192, 128, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 9 )
-region = Rect2( 0, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 9 )
-region = Rect2( 64, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 9 )
-region = Rect2( 128, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 9 )
-region = Rect2( 192, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 9 )
-region = Rect2( 256, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 9 )
-region = Rect2( 128, 128, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 9 )
-region = Rect2( 192, 128, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 9 )
-region = Rect2( 384, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 9 )
-region = Rect2( 0, 128, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 9 )
-region = Rect2( 64, 128, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 9 )
-region = Rect2( 320, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=13]
-atlas = ExtResource( 9 )
-region = Rect2( 384, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 9 )
-region = Rect2( 0, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 9 )
-region = Rect2( 64, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=16]
-atlas = ExtResource( 9 )
-region = Rect2( 128, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=17]
-atlas = ExtResource( 9 )
-region = Rect2( 192, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 9 )
-region = Rect2( 256, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=19]
-atlas = ExtResource( 9 )
-region = Rect2( 320, 64, 64, 64 )
-
-[sub_resource type="SpriteFrames" id=20]
-animations = [ {
-"frames": [ SubResource( 1 ) ],
-"loop": true,
-"name": "Land",
-"speed": 3.0
-}, {
-"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
-"loop": true,
-"name": "Idle",
-"speed": 8.0
-}, {
-"frames": [ SubResource( 7 ), SubResource( 8 ) ],
-"loop": true,
-"name": "Airborne",
-"speed": 8.0
-}, {
-"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ) ],
-"loop": false,
-"name": "Jump",
-"speed": 12.0
-}, {
-"frames": [ SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ) ],
-"loop": true,
-"name": "Move",
-"speed": 12.0
-} ]
 
 [sub_resource type="RectangleShape2D" id=21]
 extents = Vector2( 6.32132, 9.91896 )
@@ -116,16 +14,24 @@ collision_layer = 0
 collision_mask = 0
 script = ExtResource( 6 )
 
-[node name="Sprite" type="AnimatedSprite" parent="."]
-modulate = Color( 0.905882, 0.505882, 0.505882, 1 )
-frames = SubResource( 20 )
-animation = "Land"
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( 0, 5 )
 shape = SubResource( 21 )
 
 [node name="GroundCheckCast" parent="." instance=ExtResource( 1 )]
+visible = false
 
 [node name="BubblePosition" type="Position2D" parent="."]
+
+[node name="Sprites" type="Node2D" parent="."]
+modulate = Color( 0.690196, 0.247059, 0.247059, 1 )
+
+[node name="0" parent="Sprites" instance=ExtResource( 2 )]
+visible = false
+
+[node name="1" parent="Sprites" instance=ExtResource( 4 )]
+visible = false
+
+[node name="2" parent="Sprites" instance=ExtResource( 3 )]
+visible = false

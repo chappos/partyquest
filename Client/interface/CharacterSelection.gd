@@ -1,7 +1,5 @@
 extends Control
 
-onready var world_scene : PackedScene = preload("res://World.tscn")
-
 onready var select_screen = $NinePatchRect/SelectScreen
 onready var create_screen = $NinePatchRect/CreateScreen
 onready var create_name_text = $NinePatchRect/CreateScreen/HBoxContainer2/LineEdit
@@ -85,7 +83,6 @@ func _on_char_list_received(new_list):
 	clear_placeholders()
 	for key in char_list.keys():
 		var new_anim = create_sprites[char_list[key].CharSprite].duplicate()
-		print(new_anim.name)
 		select_slots[count].get_child(0).text = key
 		select_slots[count].add_child(new_anim)
 		count += 1
@@ -155,8 +152,7 @@ func _on_PlayButton_pressed():
 		print("You must select a character first")
 		return
 	var selected_name = selected_character.get_parent().get_child(0).text
-	var new_world = world_scene.instance()
 	get_tree().change_scene("res://World.tscn")
-	GameServer.ChooseCharacter(selected_name)
+	GameServer.ChooseCharacter(selected_name, char_list[selected_name].CharSprite)
 	self.call_deferred("queue_free")
 	

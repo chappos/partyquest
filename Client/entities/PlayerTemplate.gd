@@ -3,14 +3,27 @@ extends KinematicBody2D
 onready var chat_bubble : PackedScene = preload("res://interface/ChatBubble.tscn")
 
 onready var bubble_pos = $BubblePosition
-onready var sprite = $Sprite
 onready var ground_check = $GroundCheckCast
 
+var sprite
+var sprite_code = 2
+
 func _ready():
+	sprite = $Sprites.get_child(sprite_code)
+	sprite.visible = true
 	sprite.play()
 # warning-ignore:return_value_discarded
 	GameServer.connect("new_chat_entry", self, "_on_new_chat_entry")
-	
+
+func set_sprite(sprite_code):
+	sprite.stop()
+	sprite.frame = 0
+	sprite.visible = false
+	#Set new sprite
+	sprite = $Sprites.get_child(sprite_code)
+	sprite.visible = true
+	sprite.play()
+
 func MovePlayer(new_position, flip):
 	if new_position == position:
 		sprite.animation = "Idle"

@@ -1,7 +1,7 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://entities/Player.gd" type="Script" id=1]
-[ext_resource path="res://assets/sprites/entities/player/knight 1 sword 2.png" type="Texture" id=2]
+[ext_resource path="res://entities/components/PlaceHolderChar3.tscn" type="PackedScene" id=2]
 [ext_resource path="res://entities/state-machines/StateMachine.gd" type="Script" id=3]
 [ext_resource path="res://entities/state-machines/player/Idle.gd" type="Script" id=4]
 [ext_resource path="res://entities/state-machines/player/Airborne.gd" type="Script" id=5]
@@ -12,110 +12,9 @@
 [ext_resource path="res://interface/PlayerUI.tscn" type="PackedScene" id=10]
 [ext_resource path="res://assets/ui/Fonts/PatrickHand-Regular.ttf" type="DynamicFontData" id=11]
 [ext_resource path="res://assets/ui/button_pressed.png" type="Texture" id=12]
+[ext_resource path="res://entities/components/PlaceHolderChar1.tscn" type="PackedScene" id=13]
+[ext_resource path="res://entities/components/PlaceHolderChar2.tscn" type="PackedScene" id=14]
 
-[sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 2 )
-region = Rect2( 64, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 2 )
-region = Rect2( 128, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 2 )
-region = Rect2( 192, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 2 )
-region = Rect2( 256, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 2 )
-region = Rect2( 128, 128, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 2 )
-region = Rect2( 192, 128, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 2 )
-region = Rect2( 192, 128, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 2 )
-region = Rect2( 384, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 2 )
-region = Rect2( 0, 128, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 2 )
-region = Rect2( 64, 128, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 2 )
-region = Rect2( 320, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=13]
-atlas = ExtResource( 2 )
-region = Rect2( 384, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 2 )
-region = Rect2( 0, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 2 )
-region = Rect2( 64, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=16]
-atlas = ExtResource( 2 )
-region = Rect2( 128, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=17]
-atlas = ExtResource( 2 )
-region = Rect2( 192, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 2 )
-region = Rect2( 256, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=19]
-atlas = ExtResource( 2 )
-region = Rect2( 320, 64, 64, 64 )
-
-[sub_resource type="SpriteFrames" id=20]
-animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
-"loop": true,
-"name": "Idle",
-"speed": 8.0
-}, {
-"frames": [ SubResource( 6 ), SubResource( 7 ) ],
-"loop": true,
-"name": "Airborne",
-"speed": 8.0
-}, {
-"frames": [ SubResource( 8 ) ],
-"loop": true,
-"name": "Land",
-"speed": 3.0
-}, {
-"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ) ],
-"loop": false,
-"name": "Jump",
-"speed": 12.0
-}, {
-"frames": [ SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ) ],
-"loop": true,
-"name": "Move",
-"speed": 12.0
-} ]
 
 [sub_resource type="RectangleShape2D" id=21]
 extents = Vector2( 6, 2 )
@@ -149,12 +48,6 @@ one_shot = true
 
 [node name="Land" type="Node" parent="MovementStateMachine"]
 script = ExtResource( 9 )
-
-[node name="Sprite" type="AnimatedSprite" parent="."]
-position = Vector2( 0, -16 )
-scale = Vector2( 2, 2 )
-frames = SubResource( 20 )
-animation = "Land"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 12 )
@@ -212,6 +105,20 @@ expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="0" parent="Sprites" instance=ExtResource( 2 )]
+visible = false
+position = Vector2( 0, -16 )
+
+[node name="1" parent="Sprites" instance=ExtResource( 14 )]
+visible = false
+position = Vector2( 0, -16 )
+
+[node name="2" parent="Sprites" instance=ExtResource( 13 )]
+visible = false
+position = Vector2( 0, -16 )
 [connection signal="timeout" from="MovementStateMachine/Jump/Timer" to="MovementStateMachine/Jump" method="_on_Timer_timeout"]
 
 [editable path="GroundCheck"]

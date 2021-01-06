@@ -13,7 +13,6 @@ export(float) var jump_cut_threshold = -440
 onready var nametag = $Name
 onready var ui = $CanvasLayer/PlayerUI
 onready var state_machine = $MovementStateMachine
-onready var sprite = $Sprite
 onready var camera = $Camera2D
 onready var chat_bubble = $ChatBubble
 
@@ -21,10 +20,13 @@ var angled_jump_horizontal_bonus = 180
 var accepting_input = true
 var has_jump = false
 var direction = 1
+var sprite
 
 func _ready():
 	Global.player_node = self
 	nametag.text = Global.char_name
+	sprite = $Sprites.get_child(Global.char_sprite)
+	sprite.visible = true
 	sprite.play()
 	connect_ui()
 	state_machine.connect("state_changed", self, "_on_state_changed")
