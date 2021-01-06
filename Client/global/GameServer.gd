@@ -1,8 +1,8 @@
 extends Node
 
 var network = NetworkedMultiplayerENet.new()
-var ip = "127.0.0.1"
-#var ip = "13.211.145.62"
+#var ip = "127.0.0.1"
+var ip = "54.153.235.92"
 var port = 1909
 var token
 var session_user

@@ -14,6 +14,7 @@ func _ready():
 	GameServer.connect("despawn_player", self, "_on_despawn_player")
 # warning-ignore:return_value_discarded
 	GameServer.connect("world_state_updated", self, "_on_world_state_updated")
+	Global.world_node = self
 	
 func _physics_process(_delta):
 	var render_time = OS.get_system_time_msecs() - interpolation_offset
