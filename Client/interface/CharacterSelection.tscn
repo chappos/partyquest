@@ -283,29 +283,29 @@ margin_bottom = 190.0
 rect_min_size = Vector2( 320, 64 )
 alignment = 1
 
-[node name="TextureButton" type="TextureButton" parent="NinePatchRect/CreateScreen/HBoxContainer"]
+[node name="CreateSlot0Button" type="TextureButton" parent="NinePatchRect/CreateScreen/HBoxContainer"]
 margin_left = 60.0
 margin_right = 124.0
 margin_bottom = 64.0
 rect_min_size = Vector2( 64, 64 )
 
-[node name="AnimatedSprite" parent="NinePatchRect/CreateScreen/HBoxContainer/TextureButton" instance=ExtResource( 3 )]
+[node name="AnimatedSprite" parent="NinePatchRect/CreateScreen/HBoxContainer/CreateSlot0Button" instance=ExtResource( 3 )]
 
-[node name="TextureButton2" type="TextureButton" parent="NinePatchRect/CreateScreen/HBoxContainer"]
+[node name="CreateSlot1Button" type="TextureButton" parent="NinePatchRect/CreateScreen/HBoxContainer"]
 margin_left = 128.0
 margin_right = 192.0
 margin_bottom = 64.0
 rect_min_size = Vector2( 64, 64 )
 
-[node name="AnimatedSprite" parent="NinePatchRect/CreateScreen/HBoxContainer/TextureButton2" instance=ExtResource( 4 )]
+[node name="AnimatedSprite" parent="NinePatchRect/CreateScreen/HBoxContainer/CreateSlot1Button" instance=ExtResource( 4 )]
 
-[node name="TextureButton3" type="TextureButton" parent="NinePatchRect/CreateScreen/HBoxContainer"]
+[node name="CreateSlot2Button" type="TextureButton" parent="NinePatchRect/CreateScreen/HBoxContainer"]
 margin_left = 196.0
 margin_right = 260.0
 margin_bottom = 64.0
 rect_min_size = Vector2( 64, 64 )
 
-[node name="AnimatedSprite" parent="NinePatchRect/CreateScreen/HBoxContainer/TextureButton3" instance=ExtResource( 5 )]
+[node name="AnimatedSprite" parent="NinePatchRect/CreateScreen/HBoxContainer/CreateSlot2Button" instance=ExtResource( 5 )]
 
 [node name="MarginContainer2" type="MarginContainer" parent="NinePatchRect/CreateScreen"]
 margin_top = 194.0
@@ -402,8 +402,8 @@ __meta__ = {
 [connection signal="pressed" from="NinePatchRect/SelectScreen/HBoxContainer4/SelectButtonSlot1" to="." method="_on_SelectButtonSlot1_pressed"]
 [connection signal="pressed" from="NinePatchRect/SelectScreen/HBoxContainer4/SelectButtonSlot2" to="." method="_on_SelectButtonSlot2_pressed"]
 [connection signal="pressed" from="NinePatchRect/SelectScreen/HBoxContainer5/ChangeToCreateButton" to="." method="_on_ChangeToCreateButton_pressed"]
-[connection signal="pressed" from="NinePatchRect/CreateScreen/HBoxContainer/TextureButton" to="." method="_on_TextureButton_pressed"]
-[connection signal="pressed" from="NinePatchRect/CreateScreen/HBoxContainer/TextureButton2" to="." method="_on_TextureButton2_pressed"]
-[connection signal="pressed" from="NinePatchRect/CreateScreen/HBoxContainer/TextureButton3" to="." method="_on_TextureButton3_pressed"]
+[connection signal="pressed" from="NinePatchRect/CreateScreen/HBoxContainer/CreateSlot0Button" to="." method="_on_CreateSlot0Button_pressed"]
+[connection signal="pressed" from="NinePatchRect/CreateScreen/HBoxContainer/CreateSlot1Button" to="." method="_on_CreateSlot1Button_pressed"]
+[connection signal="pressed" from="NinePatchRect/CreateScreen/HBoxContainer/CreateSlot2Button" to="." method="_on_CreateSlot2Button_pressed"]
 [connection signal="pressed" from="NinePatchRect/CreateScreen/HBoxContainer3/CreateConfirm" to="." method="_on_CreateConfirm_pressed"]
 [connection signal="pressed" from="NinePatchRect/CreateScreen/HBoxContainer3/CreateBackButton" to="." method="_on_CreateBackButton_pressed"]
