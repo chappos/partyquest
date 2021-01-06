@@ -15,7 +15,7 @@
 [ext_resource path="res://entities/components/PlaceHolderChar2.tscn" type="PackedScene" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 6, 2 )
+extents = Vector2( 8, 2 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 0
@@ -48,7 +48,7 @@ position = Vector2( 0, 12 )
 shape = SubResource( 1 )
 
 [node name="GroundCheck" parent="." instance=ExtResource( 7 )]
-visible = false
+position = Vector2( 0, 12 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2( 0, -20 )
@@ -76,7 +76,6 @@ anchor_bottom = 0.0
 [node name="Sprites" type="Node2D" parent="."]
 
 [node name="0" parent="Sprites" instance=ExtResource( 2 )]
-visible = false
 position = Vector2( 0, -16 )
 
 [node name="1" parent="Sprites" instance=ExtResource( 14 )]

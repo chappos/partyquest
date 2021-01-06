@@ -17,7 +17,11 @@ func _ready():
 	Global.world_node = self
 	
 func _physics_process(_delta):
-	var render_time = OS.get_system_time_msecs() - interpolation_offset
+	if !Global.debug:
+		process_world_state()
+
+func process_world_state():
+	var render_time = GameServer.client_clock - interpolation_offset
 	if world_state_buffer.size() > 1:
 		while world_state_buffer.size() > 2 and render_time > world_state_buffer[2].T:
 			world_state_buffer.remove(0)

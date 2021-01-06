@@ -35,7 +35,8 @@ func _ready():
 
 # warning-ignore:unused_argument
 func _physics_process(delta):
-	DefineNetworkedState()
+	if !Global.debug:
+		DefineNetworkedState()
 
 func DefineNetworkedState():
 	var state = {"T": OS.get_system_time_msecs(), "P": get_global_position(), "A": sprite.flip_h, "N": nametag.text, "S": sprite_code}
