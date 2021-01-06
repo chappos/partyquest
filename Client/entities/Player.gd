@@ -21,11 +21,13 @@ var accepting_input = true
 var has_jump = false
 var direction = 1
 var sprite
+var sprite_code 
 
 func _ready():
 	Global.player_node = self
 	nametag.text = Global.char_name
-	sprite = $Sprites.get_child(Global.char_sprite)
+	sprite_code = Global.char_sprite
+	sprite = $Sprites.get_child(sprite_code)
 	sprite.visible = true
 	sprite.play()
 	connect_ui()
@@ -36,7 +38,7 @@ func _physics_process(delta):
 	DefineNetworkedState()
 
 func DefineNetworkedState():
-	var state = {"T": OS.get_system_time_msecs(), "P": get_global_position(), "A": sprite.flip_h}
+	var state = {"T": OS.get_system_time_msecs(), "P": get_global_position(), "A": sprite.flip_h, "N": nametag.text, "S": sprite_code}
 	GameServer.SendPlayerState(state)
 
 func grounded_movement(delta: float):

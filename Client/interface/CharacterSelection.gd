@@ -32,6 +32,7 @@ func _ready():
 	GameServer.connect("char_list_received", self, "_on_char_list_received")
 # warning-ignore:return_value_discarded
 	GameServer.connect("char_create_returned", self, "_on_create_returned")
+	GameServer.connect("join_world_succeeded", self, "_on_join_world_succeeded")
 	GameServer.RequestCharacterList()
 	clear_selected()
 	
@@ -152,7 +153,11 @@ func _on_PlayButton_pressed():
 		print("You must select a character first")
 		return
 	var selected_name = selected_character.get_parent().get_child(0).text
+	GameServer.JoinGameWorld(selected_name, char_list[selected_name].CharSprite)
+	
+	
+func _on_join_world_succeeded():
+# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://World.tscn")
-	GameServer.ChooseCharacter(selected_name, char_list[selected_name].CharSprite)
 	self.call_deferred("queue_free")
 	

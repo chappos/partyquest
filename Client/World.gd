@@ -35,7 +35,8 @@ func _physics_process(_delta):
 					
 					other_players.get_node(str(player)).MovePlayer(new_pos, sprite_flip)
 				else:
-					_on_spawn_player(player, world_state_buffer[2][player]["P"])
+					_on_spawn_player(player, world_state_buffer[2][player]["P"], world_state_buffer[2][player]["N"], world_state_buffer[2][player]["S"])
+					# Request server for player name and sprite
 		elif render_time > world_state_buffer[1].T: # No future world state available
 			var extrapolation_factor = float(render_time - world_state_buffer[0]["T"]) / float(world_state_buffer[1]["T"] - world_state_buffer[0]["T"] - 1.00)
 			for player in world_state_buffer[1].keys():
@@ -57,7 +58,7 @@ func _on_world_state_updated(world_state):
 		last_world_state = world_state["T"]
 		world_state_buffer.append(world_state)
 
-func _on_spawn_player(player_id, spawn_position):
+func _on_spawn_player(player_id, spawn_position, char_name, char_sprite):
 	if get_tree().get_network_unique_id() == player_id:
 		return
 	else:
@@ -66,6 +67,8 @@ func _on_spawn_player(player_id, spawn_position):
 			new_player.position = spawn_position
 			new_player.name = str(player_id)
 			other_players.add_child(new_player)
+			new_player.char_name.set_text(char_name)
+			new_player.set_sprite(char_sprite) 
 		
 	
 func _on_despawn_player(player_id):

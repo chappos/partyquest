@@ -5,16 +5,6 @@ onready var player_container_scene = preload("res://Scenes/Instances/PlayerConta
 
 var awaiting_verification = {}
 
-var test_data = {
-	"Stats": {
-		"HP": 50,
-		"STR": 4,
-		"DEX": 4,
-		"INT": 8,
-		"LUK": 8
-	}
-}
-
 func start(player_id):
 	awaiting_verification[player_id] = {"Timestamp": OS.get_unix_time()}
 	main_interface.FetchToken(player_id)
@@ -62,4 +52,5 @@ func CreatePlayerContainer(player_id):
 	FillPlayerContainer(player_container)
 	
 func FillPlayerContainer(player_container):
-	player_container.player_stats = test_data # This data should come from the authentication server
+	player_container.player_name = ""
+	player_container.player_sprite = 0

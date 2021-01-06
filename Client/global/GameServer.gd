@@ -17,6 +17,7 @@ signal login_succeeded
 signal login_failed
 signal char_create_returned(result)
 signal char_list_received(char_list)
+signal join_world_succeeded
 signal spawn_player
 signal despawn_player
 signal world_state_updated
@@ -70,10 +71,6 @@ remote func ReturnServerTime(server_time, client_time):
 	latency = (OS.get_system_time_msecs() - client_time / 2)
 	client_clock = server_time + latency
 
-func ChooseCharacter(char_name, sprite_index):
-	Global.char_name = char_name
-	Global.char_sprite = sprite_index
-
 func DetermineLatency():
 	rpc_id(1, "DetermineLatency", OS.get_system_time_msecs())
 	
@@ -95,6 +92,17 @@ remote func ReturnLatency(client_time):
 		
 		
 
+func JoinGameWorld(char_name, sprite_index):
+	Global.char_name = char_name
+	Global.char_sprite = sprite_index
+	rpc_id(1, "RequestJoinWorld", char_name, sprite_index)
+	
+remote func ReturnJoinGameWorldResults(result):
+	if result:
+		emit_signal("join_world_succeeded")
+	else:
+		print("Unable to join game world")
+
 func SendChatEntry(text):
 	rpc_id(1, "ReceiveChatEntry", text)
 
@@ -112,8 +120,8 @@ remote func ReturnTokenVerificationResults(result):
 	else:
 		emit_signal("login_failed")
 		
-remote func SpawnNewPlayer(player_id, spawn_position):
-	emit_signal("spawn_player", player_id, spawn_position)
+remote func SpawnNewPlayer(player_id, spawn_position, char_name, char_sprite):
+	emit_signal("spawn_player", player_id, spawn_position, char_name, char_sprite)
 	
 remote func DespawnPlayer(player_id):
 	emit_signal("despawn_player", player_id)

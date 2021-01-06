@@ -18,13 +18,13 @@ func StartServer():
 	print("Server Started")
 	
 	network.connect("peer_connected", self, "_Peer_Connected")
-	network.connect("peer_disconnected", self, "_Peer_Disonnected")
+	network.connect("peer_disconnected", self, "_Peer_Disconnected")
 
 func _Peer_Connected(player_id):
 	print("User " + str(player_id) + " Connected")
 	player_verification_process.start(player_id)
 	
-func _Peer_Disonnected(player_id):
+func _Peer_Disconnected(player_id):
 	print("User " + str(player_id) + " Disconnected")
 	if has_node(str(player_id)):
 		get_node(str(player_id)).queue_free()
@@ -53,9 +53,17 @@ remote func ReturnToken(token):
 	
 func ReturnTokenVerificationResults(player_id, result):
 	rpc_id(player_id, "ReturnTokenVerificationResults", result)
-	if result == true:
-		#TODO: Change hardcoded Vector2() to a spawn point derived from the players last stored map ID
-		rpc_id(0, "SpawnNewPlayer", player_id, Vector2.ZERO)
+
+remote func RequestJoinWorld(char_name, char_sprite):
+	var player_id = get_tree().get_rpc_sender_id()
+	var result = false
+	for child in get_children():
+		if child.name == str(player_id):
+			result = true
+			child.player_name = char_name
+			child.player_sprite = char_sprite
+	rpc_id(0, "SpawnNewPlayer", player_id, Vector2.ZERO, char_name, char_sprite)
+	rpc_id(player_id, "ReturnJoinGameWorldResults", result)
 
 remote func RetreiveCharacterList(token):
 	var player_id = get_tree().get_rpc_sender_id()

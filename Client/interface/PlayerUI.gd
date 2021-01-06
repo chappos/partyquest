@@ -16,6 +16,7 @@ var max_chat_entries = 16
 var player_text_can_release_focus = false # Used to manage double arrow out of chat
 
 func _ready():
+	my_name = Global.char_name
 	chatlog.scroll_following = true
 # warning-ignore:return_value_discarded
 	GameServer.connect("latency_changed", self, "_on_latency_changed")
