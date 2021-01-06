@@ -31,10 +31,9 @@ var focused_colour = Color(1, 1, 1, 1)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 # warning-ignore:return_value_discarded
-	Gateway.connect("char_list_received", self, "_on_char_list_received")
-	Gateway.connect("char_create_returned", self, "_on_create_returned")
-	Gateway.char_select = true
-	Gateway.ConnectToServer("", "", false)
+	GameServer.connect("char_list_received", self, "_on_char_list_received")
+	GameServer.connect("char_create_returned", self, "_on_create_returned")
+	GameServer.RequestCharacterList()
 	clear_selected()
 	
 
@@ -106,8 +105,7 @@ func _on_CreateBackButton_pressed():
 	create_screen.hide()
 	select_screen.show()
 	clear_selected()
-	Gateway.char_select = true
-	Gateway.ConnectToServer("", "", false)
+	GameServer.RequestCharacterList()
 
 func _on_CreateConfirm_pressed():
 	if create_name_text.text == "":
@@ -122,7 +120,7 @@ func _on_CreateConfirm_pressed():
 	
 	create_back_button.disabled = true
 	create_confirm_button.disabled = true
-	Gateway.RequestCreateCharacter(create_name_text.text, select_index)
+	GameServer.RequestCreateCharacter(create_name_text.text, select_index)
 
 func _on_create_returned(result):
 	create_back_button.disabled = false

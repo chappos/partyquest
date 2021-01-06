@@ -57,6 +57,29 @@ func ReturnTokenVerificationResults(player_id, result):
 		#TODO: Change hardcoded Vector2() to a spawn point derived from the players last stored map ID
 		rpc_id(0, "SpawnNewPlayer", player_id, Vector2.ZERO)
 
+remote func RetreiveCharacterList(token):
+	var player_id = get_tree().get_rpc_sender_id()
+	HubConnection.RequestCharacterList(token, player_id)
+
+func ReturnCharacterListResults(char_list, player_id):
+	rpc_id(player_id, "ReturnCharacterList", char_list)
+
+remote func CreateCharacterRequest(char_name, char_sprite, token):
+	var player_id = get_tree().get_rpc_sender_id()
+	var valid_request = true
+	if char_name == "":
+		valid_request = false
+	if char_sprite > 2 or char_sprite < 0:
+		valid_request = false
+	
+	if valid_request == false:
+		ReturnCreateCharacterRequest(valid_request, player_id, 1)
+	else:
+		HubConnection.CreateCharacter(char_name, char_sprite, token, player_id)
+		
+remote func ReturnCreateCharacterRequest(result, player_id, message):
+	rpc_id(player_id, "ReturnCreateCharacterResults", result, message)
+
 remote func ReceiveChatEntry(text):
 	var player_id = get_tree().get_rpc_sender_id()
 	SendChatEntry(player_id, text)

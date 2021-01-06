@@ -27,7 +27,23 @@ func ConnectToServer():
 	
 	network.connect("connection_failed", self, "_OnConnectionFailed")
 	network.connect("connection_succeeded", self, "_OnConnectionSucceeded")
+
+func RequestCharacterList(token, player_id):
+	print("Requesting character list")
+	rpc_id(1, "FetchPlayerCharacterList", token, player_id)
 	
+remote func CharacterListResults(char_list, player_id):
+	print("Got character list")
+	gameserver.ReturnCharacterListResults(char_list, player_id)
+
+func CreateCharacter(char_name, char_sprite, token, player_id):
+	print("Sending create character request")
+	rpc_id(1, "CreateCharacter", char_name, char_sprite, token, player_id)
+	
+remote func CreateCharacterResults(result, player_id, message):
+	print("Returning results of character create")
+	gameserver.ReturnCreateCharacterRequest(result, player_id, message)
+
 func _OnConnectionFailed():
 	print("Failed to connect to Game Server Hub")
 

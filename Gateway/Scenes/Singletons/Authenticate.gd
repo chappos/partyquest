@@ -31,22 +31,6 @@ remote func AuthenticationResults(result, player_id, token):
 	print("auth results received and replying to player")
 	Gateway.ReturnLoginRequest(result, player_id, token)
 
-func RequestCharacterList(token, player_id):
-	print("Requesting character list")
-	rpc_id(1, "FetchPlayerCharacterList", token, player_id)
-	
-remote func CharacterListResults(char_list, player_id):
-	print("Got character list")
-	Gateway.ReturnCharacterListResults(char_list, player_id)
-
-func CreateCharacter(char_name, char_sprite, token, player_id):
-	print("Sending create character request")
-	rpc_id(1, "CreateCharacter", char_name, char_sprite, token, player_id)
-	
-remote func CreateCharacterResults(result, player_id, message):
-	print("Returning results of character create")
-	Gateway.ReturnCreateCharacterRequest(result, player_id, message)
-
 func CreateAccount(username, password, player_id):
 	print("Sending create account request")
 	rpc_id(1, "CreateAccount", username, password, player_id)

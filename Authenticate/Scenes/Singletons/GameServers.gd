@@ -25,7 +25,49 @@ func StartServer():
 	
 	network.connect("peer_connected", self, "_Peer_Connected")
 	network.connect("peer_disconnected", self, "_Peer_Disconnected")
+
+remote func FetchPlayerCharacterList(token, player_id):
+	var server_id = get_tree().get_rpc_sender_id()
+	var username
+	var char_list = null
+	if current_players.has(token):
+		username = current_players[token].Username
+		if PlayerData.PlayerIDs[username]:
+			char_list = PlayerData.PlayerIDs[username].Characters
 	
+	rpc_id(server_id, "CharacterListResults", char_list, player_id)
+
+#TODO: Remove hardcoding checks on sprite etc
+remote func CreateCharacter(char_name, char_sprite, token, player_id):
+	var server_id = get_tree().get_rpc_sender_id()
+	var result = true
+	var username 
+	var message
+	var new_char
+	
+	if current_players.has(token):
+		username = current_players[token].Username
+	else:
+		result = false
+	
+	if PlayerData.PlayerIDs[username].Characters.size() > 3:
+		result = false
+		message = 4
+	if result == true: # Extra check to sometimes avoid iterating here
+		for user_key in PlayerData.PlayerIDs.keys():
+			for player_char in PlayerData.PlayerIDs[user_key].Characters.keys():
+				if player_char == char_name:
+					result = false
+					message = 3
+					break
+	if result == true:
+		new_char = PlayerData.template_character.duplicate(true)
+		new_char.CharSprite = char_sprite
+		PlayerData.PlayerIDs[username].Characters[char_name] = new_char
+		PlayerData.SavePlayerIDs()
+		
+	rpc_id(server_id, "CreateCharacterResults", result, player_id, message)
+
 func _Peer_Connected(gameserver_id):
 	print("Game Server " + str(gameserver_id) + " Connected")
 	gameserverlist["GameServer1"] = gameserver_id

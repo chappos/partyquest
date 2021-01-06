@@ -15,6 +15,8 @@ var delta_latency = 0
 
 signal login_succeeded
 signal login_failed
+signal char_create_returned(result)
+signal char_list_received(char_list)
 signal spawn_player
 signal despawn_player
 signal world_state_updated
@@ -51,6 +53,18 @@ func _OnConnectionSucceeded():
 	timer.autostart = true
 	timer.connect("timeout", self, "DetermineLatency")
 	self.add_child(timer)
+
+func RequestCharacterList():
+	rpc_id(1, "RetreiveCharacterList", token)
+	
+remote func ReturnCharacterList(char_list):
+	emit_signal("char_list_received", char_list)
+
+func RequestCreateCharacter(char_name, char_sprite):
+	rpc_id(1, "CreateCharacterRequest", char_name, char_sprite, token)
+	
+remote func ReturnCreateCharacterResults(result, _message):
+	emit_signal("char_create_returned", result)
 
 remote func ReturnServerTime(server_time, client_time):
 	latency = (OS.get_system_time_msecs() - client_time / 2)
