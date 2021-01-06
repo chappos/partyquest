@@ -189,9 +189,37 @@ margin_bottom = 283.0
 rect_min_size = Vector2( 320, 32 )
 alignment = 1
 
-[node name="ChangeToCreateButton" type="TextureButton" parent="NinePatchRect/SelectScreen/HBoxContainer5"]
+[node name="PlayButton" type="TextureButton" parent="NinePatchRect/SelectScreen/HBoxContainer5"]
 margin_left = 68.0
 margin_right = 140.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 72, 32 )
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 8 )
+expand = true
+
+[node name="Label" type="Label" parent="NinePatchRect/SelectScreen/HBoxContainer5/PlayButton"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -25.0
+margin_right = 25.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 3 )
+text = "Play"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer7" type="MarginContainer" parent="NinePatchRect/SelectScreen/HBoxContainer5"]
+margin_left = 144.0
+margin_right = 176.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+
+[node name="ChangeToCreateButton" type="TextureButton" parent="NinePatchRect/SelectScreen/HBoxContainer5"]
+margin_left = 180.0
+margin_right = 252.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 72, 32 )
 texture_normal = ExtResource( 9 )
@@ -206,34 +234,6 @@ margin_right = 19.5
 margin_bottom = 22.0
 custom_fonts/font = SubResource( 3 )
 text = "Create"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MarginContainer7" type="MarginContainer" parent="NinePatchRect/SelectScreen/HBoxContainer5"]
-margin_left = 144.0
-margin_right = 176.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 32, 32 )
-
-[node name="TextureButton2" type="TextureButton" parent="NinePatchRect/SelectScreen/HBoxContainer5"]
-margin_left = 180.0
-margin_right = 252.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 72, 32 )
-texture_normal = ExtResource( 9 )
-texture_pressed = ExtResource( 8 )
-expand = true
-
-[node name="Label" type="Label" parent="NinePatchRect/SelectScreen/HBoxContainer5/TextureButton2"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -25.0
-margin_right = 25.0
-margin_bottom = 20.0
-custom_fonts/font = SubResource( 3 )
-text = "Back"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -401,6 +401,7 @@ __meta__ = {
 [connection signal="pressed" from="NinePatchRect/SelectScreen/HBoxContainer4/SelectButtonSlot0" to="." method="_on_SelectButtonSlot0_pressed"]
 [connection signal="pressed" from="NinePatchRect/SelectScreen/HBoxContainer4/SelectButtonSlot1" to="." method="_on_SelectButtonSlot1_pressed"]
 [connection signal="pressed" from="NinePatchRect/SelectScreen/HBoxContainer4/SelectButtonSlot2" to="." method="_on_SelectButtonSlot2_pressed"]
+[connection signal="pressed" from="NinePatchRect/SelectScreen/HBoxContainer5/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="NinePatchRect/SelectScreen/HBoxContainer5/ChangeToCreateButton" to="." method="_on_ChangeToCreateButton_pressed"]
 [connection signal="pressed" from="NinePatchRect/CreateScreen/HBoxContainer/CreateSlot0Button" to="." method="_on_CreateSlot0Button_pressed"]
 [connection signal="pressed" from="NinePatchRect/CreateScreen/HBoxContainer/CreateSlot1Button" to="." method="_on_CreateSlot1Button_pressed"]

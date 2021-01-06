@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://entities/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/entities/player/knight 1 sword 2.png" type="Texture" id=2]
@@ -10,34 +10,36 @@
 [ext_resource path="res://entities/Jump.gd" type="Script" id=8]
 [ext_resource path="res://entities/Land.gd" type="Script" id=9]
 [ext_resource path="res://interface/PlayerUI.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/ui/Fonts/PatrickHand-Regular.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://assets/ui/button_pressed.png" type="Texture" id=12]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
-region = Rect2( 128, 128, 64, 64 )
+region = Rect2( 0, 0, 64, 64 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 2 )
-region = Rect2( 192, 128, 64, 64 )
+region = Rect2( 64, 0, 64, 64 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 64, 64 )
+region = Rect2( 128, 0, 64, 64 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 2 )
-region = Rect2( 64, 0, 64, 64 )
+region = Rect2( 192, 0, 64, 64 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 2 )
-region = Rect2( 128, 0, 64, 64 )
+region = Rect2( 256, 0, 64, 64 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 2 )
-region = Rect2( 192, 0, 64, 64 )
+region = Rect2( 128, 128, 64, 64 )
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 2 )
-region = Rect2( 256, 0, 64, 64 )
+region = Rect2( 192, 128, 64, 64 )
 
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 2 )
@@ -89,14 +91,14 @@ region = Rect2( 320, 64, 64, 64 )
 
 [sub_resource type="SpriteFrames" id=20]
 animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ) ],
-"loop": true,
-"name": "Airborne",
-"speed": 8.0
-}, {
-"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
 "loop": true,
 "name": "Idle",
+"speed": 8.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "Airborne",
 "speed": 8.0
 }, {
 "frames": [ SubResource( 8 ) ],
@@ -117,6 +119,10 @@ animations = [ {
 
 [sub_resource type="RectangleShape2D" id=21]
 extents = Vector2( 6, 2 )
+
+[sub_resource type="DynamicFont" id=22]
+size = 12
+font_data = ExtResource( 11 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 0
@@ -177,6 +183,35 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 
 [node name="ChatBubble" type="Position2D" parent="."]
+
+[node name="Name" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = 20.0
+margin_right = 20.0
+margin_bottom = 36.0
+grow_horizontal = 2
+rect_min_size = Vector2( 40, 16 )
+custom_fonts/font = SubResource( 22 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Name"]
+modulate = Color( 0.317647, 0.317647, 0.317647, 0.862745 )
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+rect_min_size = Vector2( 40, 16 )
+texture = ExtResource( 12 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="timeout" from="MovementStateMachine/Jump/Timer" to="MovementStateMachine/Jump" method="_on_Timer_timeout"]
 
 [editable path="GroundCheck"]

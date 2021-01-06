@@ -69,7 +69,10 @@ remote func ReturnCreateCharacterResults(result, _message):
 remote func ReturnServerTime(server_time, client_time):
 	latency = (OS.get_system_time_msecs() - client_time / 2)
 	client_clock = server_time + latency
-	
+
+func ChooseCharacter(char_name):
+	Global.char_name = char_name
+
 func DetermineLatency():
 	rpc_id(1, "DetermineLatency", OS.get_system_time_msecs())
 	

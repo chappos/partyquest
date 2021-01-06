@@ -1,8 +1,6 @@
 extends Control
 
-#onready var placeholder_one: PackedScene = preload("res://interface/components/PlaceholderChar1.tscn")
-#onready var placeholder_two: PackedScene = preload("res://interface/components/PlaceHolderChar2.tscn")
-#onready var placeholder_three: PackedScene = preload("res://interface/components/PlaceHolderChar3.tscn")
+onready var world_scene : PackedScene = preload("res://World.tscn")
 
 onready var select_screen = $NinePatchRect/SelectScreen
 onready var create_screen = $NinePatchRect/CreateScreen
@@ -151,3 +149,14 @@ func _on_SelectButtonSlot1_pressed():
 func _on_SelectButtonSlot2_pressed():
 	change_selected(select_slots[2])
 	select_index = 2
+
+func _on_PlayButton_pressed():
+	if selected_character == null:
+		print("You must select a character first")
+		return
+	var selected_name = selected_character.get_parent().get_child(0).text
+	var new_world = world_scene.instance()
+	get_tree().change_scene("res://World.tscn")
+	GameServer.ChooseCharacter(selected_name)
+	self.call_deferred("queue_free")
+	
