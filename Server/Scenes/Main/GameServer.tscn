@@ -20,5 +20,7 @@ autostart = true
 
 [node name="StateProcessing" type="Node" parent="."]
 script = ExtResource( 3 )
+
+[node name="ConnectedPlayers" type="Node" parent="."]
 [connection signal="timeout" from="PlayerVerification/VerificationExpiration" to="PlayerVerification" method="_on_VerificationExpiration_timeout"]
 [connection signal="timeout" from="TokenExpiration" to="." method="_on_TokenExpiration_timeout"]

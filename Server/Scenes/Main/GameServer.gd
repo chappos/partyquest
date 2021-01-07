@@ -1,6 +1,7 @@
 extends Node
 
 onready var player_verification_process = get_node("PlayerVerification")
+onready var connected_players = $ConnectedPlayers
 
 var network = NetworkedMultiplayerENet.new()
 var port = 1909
@@ -26,8 +27,8 @@ func _Peer_Connected(player_id):
 	
 func _Peer_Disconnected(player_id):
 	print("User " + str(player_id) + " Disconnected")
-	if has_node(str(player_id)):
-		get_node(str(player_id)).queue_free()
+	if connected_players.has_node(str(player_id)):
+		connected_players.get_node(str(player_id)).queue_free()
 		player_state_collection.erase(player_id)
 		rpc_id(0, "DespawnPlayer", player_id)
 
@@ -46,7 +47,18 @@ func _on_TokenExpiration_timeout():
 
 func FetchToken(player_id):
 	rpc_id(player_id, "FetchToken")
-	
+
+remote func FetchPlayerByID(requested_player_id):
+	var player_id = get_tree().get_rpc_sender_id()
+	var requested_player_container = null
+	var player_name = ""
+	var sprite_id = 2
+	if connected_players.has_node(str(requested_player_id)):
+		requested_player_container = connected_players.get_node(str(requested_player_id))
+		player_name = requested_player_container.player_name
+		sprite_id = requested_player_container.player_sprite
+	rpc_id(player_id, "ReturnPlayerDetails", requested_player_id, player_name, sprite_id)
+
 remote func ReturnToken(token):
 	var player_id = get_tree().get_rpc_sender_id()
 	player_verification_process.Verify(player_id, token)
@@ -57,11 +69,12 @@ func ReturnTokenVerificationResults(player_id, result):
 remote func RequestJoinWorld(char_name, char_sprite):
 	var player_id = get_tree().get_rpc_sender_id()
 	var result = false
-	for child in get_children():
-		if child.name == str(player_id):
-			result = true
-			child.player_name = char_name
-			child.player_sprite = char_sprite
+	var player_container = null
+	if connected_players.has_node(str(player_id)):
+		player_container = connected_players.get_node(str(player_id))
+		result = true
+		player_container.player_name = char_name
+		player_container.player_sprite = char_sprite
 	rpc_id(0, "SpawnNewPlayer", player_id, Vector2.ZERO, char_name, char_sprite)
 	rpc_id(player_id, "ReturnJoinGameWorldResults", result)
 
@@ -94,7 +107,7 @@ remote func ReceiveChatEntry(text):
 	
 func SendChatEntry(player_id, text):
 	var player_name = str(player_id)
-	for child in get_children():
+	for child in connected_players.get_children():
 		if child.name == player_name:
 			player_name = child.player_name
 	#Validate player text, determine which players receive it

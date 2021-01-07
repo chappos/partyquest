@@ -14,6 +14,8 @@ func _ready():
 	GameServer.connect("despawn_player", self, "_on_despawn_player")
 # warning-ignore:return_value_discarded
 	GameServer.connect("world_state_updated", self, "_on_world_state_updated")
+# warning-ignore:return_value_discarded
+	GameServer.connect("player_details_received", self, "_on_player_details_received")
 	Global.world_node = self
 	
 func _physics_process(_delta):
@@ -40,7 +42,7 @@ func process_world_state():
 					
 					other_players.get_node(str(player)).MovePlayer(new_pos, sprite_flip)
 				else:
-					_on_spawn_player(player, world_state_buffer[2][player]["P"], world_state_buffer[2][player]["N"], world_state_buffer[2][player]["S"])
+					_on_spawn_player(player, world_state_buffer[2][player]["P"])
 					# Request server for player name and sprite
 		elif render_time > world_state_buffer[1].T: # No future world state available
 			var extrapolation_factor = float(render_time - world_state_buffer[0]["T"]) / float(world_state_buffer[1]["T"] - world_state_buffer[0]["T"] - 1.00)
@@ -63,7 +65,7 @@ func _on_world_state_updated(world_state):
 		last_world_state = world_state["T"]
 		world_state_buffer.append(world_state)
 
-func _on_spawn_player(player_id, spawn_position, char_name, char_sprite):
+func _on_spawn_player(player_id, spawn_position, char_name = "", char_sprite = 2):
 	if get_tree().get_network_unique_id() == player_id:
 		return
 	else:
@@ -72,9 +74,20 @@ func _on_spawn_player(player_id, spawn_position, char_name, char_sprite):
 			new_player.position = spawn_position
 			new_player.name = str(player_id)
 			other_players.add_child(new_player)
-			new_player.char_name.set_text(char_name)
-			new_player.set_sprite(char_sprite) 
-		
+			if char_name == "":
+				GameServer.FetchPlayerDetails(player_id)
+			else:
+				new_player.char_name.set_text(char_name)
+				new_player.set_sprite(char_sprite)
+
+func _on_player_details_received(player_id, char_name, char_sprite):
+	if get_tree().get_network_unique_id() == player_id:
+		return
+	else:
+		if other_players.has_node(str(player_id)):
+			var target_player = other_players.get_node(str(player_id))
+			target_player.char_name.set_text(char_name)
+			target_player.set_sprite(char_sprite)
 	
 func _on_despawn_player(player_id):
 	yield(get_tree().create_timer(0.2), "timeout")

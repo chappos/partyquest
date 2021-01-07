@@ -1,8 +1,8 @@
 extends Node
 
 var network = NetworkedMultiplayerENet.new()
-#var ip = "127.0.0.1"
-var ip = "ec2-13-55-254-189.ap-southeast-2.compute.amazonaws.com"
+var ip = "127.0.0.1"
+#var ip = "ec2-13-55-254-189.ap-southeast-2.compute.amazonaws.com"
 var port = 1909
 var token
 var session_user
@@ -18,8 +18,10 @@ signal login_failed
 signal char_create_returned(result)
 signal char_list_received(char_list)
 signal join_world_succeeded
+
 signal spawn_player
 signal despawn_player
+signal player_details_received(player_id, player_name, player_sprite)
 signal world_state_updated
 signal latency_changed(new_latency)
 
@@ -90,7 +92,11 @@ remote func ReturnLatency(client_time):
 		emit_signal("latency_changed", latency)
 		latency_array.clear()
 		
-		
+func FetchPlayerDetails(player_id):
+	rpc_id(1, "FetchPlayerByID", player_id)
+	
+remote func ReturnPlayerDetails(player_id, player_name, player_sprite):
+	emit_signal("player_details_received", player_id, player_name, player_sprite)
 
 func JoinGameWorld(char_name, sprite_index):
 	Global.char_name = char_name

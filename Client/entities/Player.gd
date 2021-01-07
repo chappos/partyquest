@@ -39,7 +39,7 @@ func _physics_process(delta):
 		DefineNetworkedState()
 
 func DefineNetworkedState():
-	var state = {"T": OS.get_system_time_msecs(), "P": get_global_position(), "A": sprite.flip_h, "N": nametag.text, "S": sprite_code}
+	var state = {"T": OS.get_system_time_msecs(), "P": get_global_position(), "A": sprite.flip_h}
 	GameServer.SendPlayerState(state)
 
 func grounded_movement(delta: float):
