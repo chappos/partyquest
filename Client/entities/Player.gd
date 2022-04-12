@@ -39,7 +39,7 @@ func _physics_process(delta):
 		DefineNetworkedState()
 
 func DefineNetworkedState():
-	var state = {"T": OS.get_system_time_msecs(), "P": get_global_position(), "A": sprite.flip_h}
+	var state = {"T": OS.get_system_time_msecs(), "P": get_global_position(), "A": sprite.flip_h, "S": state_machine.state.name}
 	GameServer.SendPlayerState(state)
 
 func grounded_movement(delta: float):
@@ -93,7 +93,10 @@ func handle_jump():
 			velocity = jump_vel
 			
 			state_machine.exit_and_change_to("Jump")
-		
+
+func handle_sit():
+	if Input.is_action_pressed("sit") and accepting_input:
+		state_machine.exit_and_change_to("Sit")
 
 func jump_cut():
 	if velocity.y < jump_cut_threshold:

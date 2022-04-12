@@ -2,10 +2,22 @@ extends Node
 
 var fsm: StateMachine
 
+var chair: Chair
+
 func enter(_e):
-	pass
+	render_chair(_e)
+
+func render_chair(e):
+	chair = Chair.new(e.position, e.sprite.flip_h)
+	add_child(chair)
 	
+	if(e.sprite.flip_h):
+		e.position = Vector2(e.position.x - chair.PlayerSitOffsetX, e.position.y + chair.PlayerSitOffsetY)
+	else:
+		e.position = Vector2(e.position.x + chair.PlayerSitOffsetX, e.position.y + chair.PlayerSitOffsetY)
+
 func exit(_e, next_state):
+	chair.queue_free()
 	fsm._change_to(next_state)
 	
 # Optional handler functions for game loop events
@@ -14,17 +26,11 @@ func process(_e, delta):
 	return delta
 	
 func physics_process(e, delta):
-	if not e.is_on_floor() and not e.ground_check.is_grounded():
-		exit(e, "Airborne")
-		return
 	if e.direction != 0:
-		exit(e, "Move")
+		exit(e, "Idle")
 		return
-	e.handle_jump()
-	e.handle_sit()
+		
 	e.grounded_movement(delta)
-	e.apply_gravity(delta)
-	e.apply_movement(true)
 	
 func input(_e, event):
 	return event
