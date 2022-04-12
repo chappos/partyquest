@@ -21,6 +21,7 @@ func physics_process(e, delta):
 		exit(e, "Move")
 		return
 	e.handle_jump()
+	e.handle_sit()
 	e.grounded_movement(delta)
 	e.apply_gravity(delta)
 	e.apply_movement(true)

@@ -93,7 +93,10 @@ func handle_jump():
 			velocity = jump_vel
 			
 			state_machine.exit_and_change_to("Jump")
-		
+
+func handle_sit():
+	if Input.is_action_pressed("sit") and accepting_input:
+		state_machine.exit_and_change_to("Sit")
 
 func jump_cut():
 	if velocity.y < jump_cut_threshold:

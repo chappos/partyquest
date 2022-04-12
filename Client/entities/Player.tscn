@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://entities/Player.gd" type="Script" id=1]
 [ext_resource path="res://entities/components/PlaceHolderChar3.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://entities/Land.gd" type="Script" id=9]
 [ext_resource path="res://interface/PlayerUI.tscn" type="PackedScene" id=10]
 [ext_resource path="res://entities/components/Name.tscn" type="PackedScene" id=11]
+[ext_resource path="res://entities/state-machines/player/Sit.gd" type="Script" id=12]
 [ext_resource path="res://entities/components/PlaceHolderChar1.tscn" type="PackedScene" id=13]
 [ext_resource path="res://entities/components/PlaceHolderChar2.tscn" type="PackedScene" id=14]
 
@@ -42,6 +43,9 @@ one_shot = true
 
 [node name="Land" type="Node" parent="MovementStateMachine"]
 script = ExtResource( 9 )
+
+[node name="Sit" type="Node" parent="MovementStateMachine"]
+script = ExtResource( 12 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 12 )
@@ -86,6 +90,7 @@ position = Vector2( 0, -16 )
 [node name="2" parent="Sprites" instance=ExtResource( 13 )]
 visible = false
 position = Vector2( 0, -16 )
+
 [connection signal="timeout" from="MovementStateMachine/Jump/Timer" to="MovementStateMachine/Jump" method="_on_Timer_timeout"]
 
 [editable path="GroundCheck"]
