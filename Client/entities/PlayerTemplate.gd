@@ -7,6 +7,8 @@ onready var ground_check = $GroundCheckCast
 onready var char_name = $Name
 
 var sprite
+var chair
+var sitting = false
 
 func _ready():
 # warning-ignore:return_value_discarded
@@ -34,7 +36,30 @@ func MovePlayer(new_position, flip):
 		else:
 			sprite.animation = "Airborne"
 	sprite.flip_h = flip
-
+	
+func UpdatePlayer(new_position, flip, state):
+	if state == "Sit":
+		if !sitting:
+			sitting = true
+			sprite.animation = "Sit"
+			sprite.flip_h = flip
+			render_chair(flip)
+	else:
+		if sitting:
+			sitting = false
+			sprite.position = Vector2(sprite.position.x - chair.PlayerSitOffsetX, sprite.position.y - chair.PlayerSitOffsetY)
+			chair.queue_free()
+		MovePlayer(new_position, flip)
+		
+func render_chair(flip_h):
+	chair = Chair.new(sprite.position, flip_h)
+	add_child(chair)
+	
+	if(flip_h):
+		sprite.position = Vector2(sprite.position.x - chair.PlayerSitOffsetX, sprite.position.y + chair.PlayerSitOffsetY)
+	else:
+		sprite.position = Vector2(sprite.position.x + chair.PlayerSitOffsetX, sprite.position.y + chair.PlayerSitOffsetY)
+	
 func _on_new_chat_entry(player_id, player_name, new_text):
 	var chatter = str(player_id)
 	if chatter != self.name:

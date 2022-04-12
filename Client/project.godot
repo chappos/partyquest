@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "Chair",
+"language": "GDScript",
+"path": "res://entities/Chair.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Entity",
 "language": "GDScript",
@@ -25,6 +30,7 @@ _global_script_classes=[ {
 "path": "res://entities/state-machines/StateMachine.gd"
 } ]
 _global_script_class_icons={
+"Chair": "",
 "Entity": "",
 "Player": "",
 "StateMachine": ""

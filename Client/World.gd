@@ -39,8 +39,9 @@ func process_world_state():
 				if other_players.has_node(str(player)):
 					var new_pos = lerp(world_state_buffer[1][player]["P"], world_state_buffer[2][player]["P"], interpolation_factor)
 					var sprite_flip = world_state_buffer[2][player]["A"]
+					var player_state = world_state_buffer[2][player]["S"]
 					
-					other_players.get_node(str(player)).MovePlayer(new_pos, sprite_flip)
+					other_players.get_node(str(player)).UpdatePlayer(new_pos, sprite_flip, player_state)
 				else:
 					_on_spawn_player(player, world_state_buffer[2][player]["P"])
 					# Request server for player name and sprite
@@ -57,7 +58,9 @@ func process_world_state():
 					var pos_delta = (world_state_buffer[1][player]["P"] - world_state_buffer[0][player]["P"])
 					var new_pos = world_state_buffer[1][player]["P"] + (pos_delta * extrapolation_factor)
 					var sprite_flip = world_state_buffer[1][player]["A"]
-					other_players.get_node(str(player)).MovePlayer(new_pos, sprite_flip)
+					var player_state = world_state_buffer[1][player]["S"]
+					
+					other_players.get_node(str(player)).UpdatePlayer(new_pos, sprite_flip, player_state)
 
 	
 func _on_world_state_updated(world_state):
